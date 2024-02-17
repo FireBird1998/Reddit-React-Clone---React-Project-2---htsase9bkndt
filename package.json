@@ -1,5 +1,9 @@
 {
-  "name": "app-router-react18-boilerplate",
+  "name": "nextjs-reditclone",
+  "author": {
+    "name": "Ankit Das",
+    "email": "dasankit1998.20@gmail.com"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +13,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
+    "@mui/material-nextjs": "^5.15.9",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0"
