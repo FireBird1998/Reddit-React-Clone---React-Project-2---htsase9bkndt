@@ -16,13 +16,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-
-
-      {/* reset all styles */}
       <CssBaseline />
 
       <body className={inter.className}>
-        <AppRouterCacheProvider>
+        <AppRouterCacheProvider>          
           {children}
         </AppRouterCacheProvider>
       </body>
