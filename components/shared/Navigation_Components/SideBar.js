@@ -1,8 +1,5 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -17,55 +14,43 @@ import MailIcon from "@mui/icons-material/Mail";
 import { LayoutContext } from "@/context/LayoutContext";
 import { Toolbar } from "@mui/material";
 
+import { sidebarLinks1 } from "@/Constants";    
+
 const drawerWidth = 240;
 
-function SideBar(props) {
-  //   const [mobileOpen, setMobileOpen] = React.useState(false);
-  //   const [isClosing, setIsClosing] = React.useState(false);
-
-  //   const handleDrawerClose = () => {
-  //     setIsClosing(true);
-  //     setMobileOpen(false);
-  //   };
-
-  //   const handleDrawerTransitionEnd = () => {
-  //     setIsClosing(false);
-  //   };
-
-  //   const handleDrawerToggle = () => {
-  //     if (!isClosing) {
-  //       setMobileOpen(!mobileOpen);
-  //     }
-  //   };
-
-  const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } =
-    React.useContext(LayoutContext);
+function SideBar() {
+  
+  const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } = React.useContext(LayoutContext);
 
   const drawer = (
     <div>
       <Divider sx={{display: { lg: "block", xs: "none" }}} />
       <Toolbar sx={{display: { lg: "none", xs: "block" }}}/>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+      {sidebarLinks1.map((link) => (
+          <ListItem key={link.title} disablePadding>
+            <ListItemButton sx={{
+                color: "white",
+            }}>
+              <ListItemIcon sx={{
+                color: "white",
+              }}>
+                {<link.icon  />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={link.title} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {sidebarLinks1.map((link) => (
+          <ListItem key={link.title} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {<link.icon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={link.title} />
             </ListItemButton>
           </ListItem>
         ))}

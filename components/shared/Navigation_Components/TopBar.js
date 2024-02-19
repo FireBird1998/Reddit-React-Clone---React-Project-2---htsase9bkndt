@@ -16,8 +16,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import OutboundOutlinedIcon from '@mui/icons-material/OutboundOutlined';
+import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import Button from "@mui/material/Button";
+
 import { useTheme } from "@emotion/react";
 import { LayoutContext } from "@/context/LayoutContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,6 +70,7 @@ const TopBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const theme = useTheme();
+  const { isUserAuthenticated } = React.useContext(AuthContext);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -91,7 +99,7 @@ const TopBar = () => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -160,6 +168,8 @@ const TopBar = () => {
     </Menu>
   );
 
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -187,9 +197,15 @@ const TopBar = () => {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-             reddit 
+              reddit
             </Typography>
           </Box>
+          {/* this box will show the authouncitated menu */}
+          {!isUserAuthenticated() && (
+          <Box sx={{ flexGrow: 1 }}>
+
+          </Box>
+          )}
           {/* search part */}
           <Search>
             <SearchIconWrapper>
@@ -200,51 +216,109 @@ const TopBar = () => {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          {/* this is for the notification and profile part */}
+          {/* this is for the notification and profile part and when not authencated shows login in and get app button */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Box>
+            {isUserAuthenticated() && (
+              <>
+                <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="popular"
+                    color="inherit"
+                  >
+                    <OutboundOutlinedIcon />
+                  </IconButton>
+                  <IconButton 
+                    size="large" 
+                    aria-label="chat" 
+                    color="inherit"
+                  >
+                    <TextsmsOutlinedIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={17} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </Box>
+                <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </Box>
+              </>
+            )}
+            {!isUserAuthenticated() && (
+              <Box sx={{}}>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "white",
+                    borderColor: "white",
+                    mx: 1,
+                    borderRadius: "50px",
+                    "&:focus": {
+                      borderColor: "white",
+                      color: "white",
+                    },
+                    "&:hover": {
+                      borderColor: "white",
+                      color: "white",
+                    },
+                    display: { xs: "none", lg: "inline-flex" },
+                  }}
+                >
+                  <QrCodeScannerIcon />
+                  <span style={{ marginLeft: "5px" }}>Get App</span>
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "red",
+                    color: "white",
+                    "&:focus": {
+                      backgroundColor: "red",
+                      color: "white",
+                    },
+                    "&:hover": {
+                      backgroundColor: "red",
+                      color: "white",
+                    },
+                    mx: 1,
+                    borderRadius: "50px",
+                  }}
+                >
+                  <LoginOutlinedIcon sx={{
+                    display: { xs: "inline-flex", lg: "none" },
+                  }} />
+                  <Typography variant="span" sx={{
+                    display: { xs: "none", lg: "inline-flex" },
+                  }}>Log In</Typography>
+                </Button>
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
