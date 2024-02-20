@@ -14,28 +14,32 @@ import MailIcon from "@mui/icons-material/Mail";
 import { LayoutContext } from "@/context/LayoutContext";
 import { Toolbar } from "@mui/material";
 
-import { sidebarLinks1 } from "@/Constants";    
+import { sidebarLinks1 } from "@/Constants";
 
 const drawerWidth = 240;
 
 function SideBar() {
-  
-  const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } = React.useContext(LayoutContext);
+  const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } =
+    React.useContext(LayoutContext);
 
   const drawer = (
     <div>
-      <Divider sx={{display: { lg: "block", xs: "none" }}} />
-      <Toolbar sx={{display: { lg: "none", xs: "block" }}}/>
+      <Divider sx={{ display: { lg: "block", xs: "none" } }} />
+      <Toolbar sx={{ display: { lg: "none", xs: "block" } }} />
       <List>
-      {sidebarLinks1.map((link) => (
+        {sidebarLinks1.map((link) => (
           <ListItem key={link.title} disablePadding>
-            <ListItemButton sx={{
+            <ListItemButton
+              sx={{
                 color: "white",
-            }}>
-              <ListItemIcon sx={{
-                color: "white",
-              }}>
-                {<link.icon  />}
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  color: "white",
+                }}
+              >
+                {<link.icon />}
               </ListItemIcon>
               <ListItemText primary={link.title} />
             </ListItemButton>
@@ -46,8 +50,16 @@ function SideBar() {
       <List>
         {sidebarLinks1.map((link) => (
           <ListItem key={link.title} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
+            <ListItemButton
+              sx={{
+                color: "white",
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  color: "white",
+                }}
+              >
                 {<link.icon />}
               </ListItemIcon>
               <ListItemText primary={link.title} />
@@ -77,7 +89,7 @@ function SideBar() {
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-            display: { lg: "none", md: "block" },
+          display: { lg: "none", md: "block" },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
       >

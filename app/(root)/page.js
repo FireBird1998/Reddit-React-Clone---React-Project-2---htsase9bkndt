@@ -1,68 +1,25 @@
 "use client";
 import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import SideBarPopularCommunity from "@/components/Home_Components/SideBarPopularCommunity";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 export default function Home() {
   const theme = useTheme();
+  const {isUserAuthenticated} = useContext(AuthContext);
   return (
   <Box sx={{
-
-    backgroundColor: theme.palette.background.default
+    display: "flex",
+    backgroundColor: theme.palette.background.default,
+    position: "relative",
+    minHeight: "100%",
+    width: "100%",
   }}>
-    
-    <h1>Welcome to the Next.js MUI Starter</h1>
-    <p>
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      This is a starter template for a Next.js app with Material-UI, including
-      a responsive layout and a dark theme.
-      lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      
-    </p>
+    <Box>
+      <h1>Home</h1>
+    </Box>
+    {!isUserAuthenticated() && <SideBarPopularCommunity />}
   </Box>
   );
 }

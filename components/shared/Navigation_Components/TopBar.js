@@ -21,6 +21,7 @@ import OutboundOutlinedIcon from '@mui/icons-material/OutboundOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
 
 import { useTheme } from "@emotion/react";
 import { LayoutContext } from "@/context/LayoutContext";
@@ -71,6 +72,7 @@ const TopBar = () => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const theme = useTheme();
   const { isUserAuthenticated } = React.useContext(AuthContext);
+  const router = useRouter();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -93,6 +95,10 @@ const TopBar = () => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const goToLogin = () => {
+    router.push("/signIn");
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -309,6 +315,7 @@ const TopBar = () => {
                     mx: 1,
                     borderRadius: "50px",
                   }}
+                  onClick={() => goToLogin()}
                 >
                   <LoginOutlinedIcon sx={{
                     display: { xs: "inline-flex", lg: "none" },

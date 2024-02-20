@@ -2,8 +2,10 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
+
 import { LayoutProvider } from "@/context/LayoutContext";
 import { AuthProvider } from "@/context/AuthContext";
+
 
 import TopBar from "@/components/shared/Navigation_Components/TopBar";
 import SideBar from "@/components/shared/Navigation_Components/SideBar";
@@ -11,6 +13,7 @@ import { Container } from "@mui/material";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+
 
 const themeOptions = {
   palette: {
@@ -26,6 +29,10 @@ const themeOptions = {
       paper: "#0C1416",
     },
     divider: "rgba(133,133,133,0.69)",
+    typography: {
+        // Add this property
+        color: "white",
+      },
   },
 };
 
