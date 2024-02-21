@@ -12,8 +12,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { Snackbar } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
+import axios from "@/utility/axiosConfig";
 
 function Copyright(props) {
   return (
@@ -34,16 +37,37 @@ function Copyright(props) {
 }
 
 export default function Register() {
+  const router = useRouter();
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const mutation = useMutation((user) => axios.post("/user/signup", user));
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user = {
       name: data.get("name"),
       email: data.get("email"),
       password: data.get("password"),
+      appType: "reddit",
+    };
+    mutation.mutate(user, {
+      onSuccess: (data) => {
+        console.log(data);
+        setSnackbarMessage("User registered successfully");
+        setSnackbarOpen(true);
+        setTimeout(() => {
+          router.push("/signIn");
+        }, 3000);
+      },
+      onError: (error) => {
+        console.error(error);
+        setSnackbarMessage("User registration failed");
+        setSnackbarOpen(true);
+      },
     });
   };
-  const router = useRouter();
+
   const handleClick = () => {
     router.push("/");
   };
@@ -56,6 +80,12 @@ export default function Register() {
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        message={snackbarMessage}
+        onClose={() => setSnackbarOpen(false)}
+      />
       <Grid
         item
         xs={false}

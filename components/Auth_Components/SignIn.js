@@ -10,10 +10,14 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { Snackbar } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@emotion/react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
+import axios from "@/utility/axiosConfig";
+import { AuthContext } from "@/context/AuthContext";
 
 function Copyright(props) {
   return (
@@ -34,15 +38,45 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
+  const router = useRouter();
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const { setAuthState } = React.useContext(AuthContext);
+  const mutation = useMutation((user) => axios.post("/user/login", user));
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const user = {
+        email: data.get("email"),
+        password: data.get("password"),
+        appType: 'reddit'
+      };
+  
+      mutation.mutate(user, {
+        onSuccess: (data) => {
+          console.log(data);
+          setSnackbarMessage('User logged in successfully');
+          setSnackbarOpen(true);
+        //   console.log(data.data.token);
+        //   console.log(data.data.data);
+          setAuthState({
+            token: data.data.token,
+            data: data.data.data
+        });
+
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
+          // handle successful login here
+        },
+        onError: (error) => {
+          console.error(error);
+          setSnackbarMessage('Login failed');
+          setSnackbarOpen(true);
+          // handle error here
+        }
+      });
   };
-  const router = useRouter();
   const handleClick = () => {
     router.push("/");
   };
@@ -50,12 +84,17 @@ export default function SignIn() {
     router.push("/register");
   };
 
-
   const theme = useTheme();
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        message={snackbarMessage}
+        onClose={() => setSnackbarOpen(false)}
+      />
       <Grid
         item
         xs={false}
@@ -82,12 +121,17 @@ export default function SignIn() {
             backgroundColor: "rgba(0,0,0,0.5)",
             cursor: "pointer",
           }}
-            onClick={() => handleClick()}
+          onClick={() => handleClick()}
         >
-          <Typography variant="h2" sx={{
-            color: "white",
-            fontWeight: "bold"
-          }}>Home</Typography>
+          <Typography
+            variant="h2"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Home
+          </Typography>
         </Box>
       </Grid>
       <Grid

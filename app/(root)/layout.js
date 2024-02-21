@@ -17,7 +17,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 const themeOptions = {
   palette: {
-    type: "dark",
+    mode: "dark",
     primary: {
       main: "#0c1416",
     },
