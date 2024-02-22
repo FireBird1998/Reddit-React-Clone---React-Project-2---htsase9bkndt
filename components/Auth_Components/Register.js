@@ -78,7 +78,7 @@ export default function Register() {
   const theme = useTheme();
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Grid container component="main" sx={{ height: "calc(100vh - 64px)" }}>
       <CssBaseline />
       <Snackbar
         open={snackbarOpen}
@@ -119,6 +119,10 @@ export default function Register() {
             sx={{
               color: "white",
               fontWeight: "bold",
+              display: {
+                xs: "none",
+                sm: "block",
+              },
             }}
           >
             Home

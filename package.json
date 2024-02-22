@@ -20,6 +20,7 @@
     "@mui/material": "^5.15.10",
     "@mui/material-nextjs": "^5.15.9",
     "axios": "^1.6.7",
+    "material-ui-popup-state": "^5.0.10",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "react-query";
 import axios from "@/utility/axiosConfig.js";
-import { keyframes } from '@emotion/react';
+import { keyframes, useTheme } from "@emotion/react";
 
 const fadeInOut = keyframes`
   0% { opacity: 1; }
@@ -23,6 +23,7 @@ const fadeInOut = keyframes`
 const SideBarPopularCommunity = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const scrollRef = useRef(null);
+  const theme = useTheme();
   const fetchPopularCommunities = async () => {
     const { data } = await axios.get("/reddit/channel");
     return data.data;
@@ -139,7 +140,7 @@ const SideBarPopularCommunity = () => {
         minHeight: "100px",
         maxHeight: isExpanded ? "calc(100vh - 100px)" : "390px",
         minWidth: "320px",
-        color: "white",
+        color: theme.palette.typography.color,
         backgroundColor: "rgba(0,0,0,0.5)",
         display: {
           xs: "none",
@@ -154,7 +155,10 @@ const SideBarPopularCommunity = () => {
         transition: "all 0.7s",
       }}
     >
-      <Typography variant="h5" sx={{ color: "white", marginBottom: "1rem" }}>
+      <Typography
+        variant="h5"
+        sx={{ color: theme.palette.typography.color, marginBottom: "1rem" }}
+      >
         Popular Communities
       </Typography>
 
@@ -184,7 +188,8 @@ const SideBarPopularCommunity = () => {
             key={community.name}
             sx={{
               backgroundColor: "rgba(0,0,0,0.1)",
-              color: "white",
+              borderRadius: "10px",
+              color: theme.palette.typography.color,
               width: "calc(100% - 0.5rem)",
               boxShadow: null,
               cursor: "pointer",
@@ -192,17 +197,30 @@ const SideBarPopularCommunity = () => {
                 backgroundColor: "rgba(255,255,255,0.3)", // Changed to a lighter color
                 boxShadow: "0 0 10px rgba(0,0,0,0.5)",
                 borderRadius: "10px",
-            },
+              },
             }}
             // onClick={() => {
             //   window.location.href = `/r/${community.name}`;
             // }}
           >
-            <ListItemText primary={`r/${community.name}`} sx={{ animation: isExpanded ? `${fadeInOut} 0.8s` : 'none' }} />
+            <ListItemText
+              primary={`r/${community.name}`}
+              sx={{
+                animation: isExpanded ? `${fadeInOut} 0.8s` : "none",
+                color: theme.palette.typography.color,
+              }}
+            />
           </ListItem>
         ))}
       </Stack>
-      <Button onClick={() => setIsExpanded(!isExpanded)} sx={{ color: "whitesmoke",fontSize: "0.8rem",  animation: isExpanded ? `${fadeInOut} 0.8s` : 'none' }} >
+      <Button
+        onClick={() => setIsExpanded(!isExpanded)}
+        sx={{
+          color: theme.palette.typography.color,
+          fontSize: "0.8rem",
+          animation: isExpanded ? `${fadeInOut} 0.8s` : "none",
+        }}
+      >
         {isExpanded ? "See Less" : "See More"}
       </Button>
     </Box>

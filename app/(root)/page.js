@@ -1,9 +1,10 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import SideBarPopularCommunity from "@/components/Home_Components/SideBarPopularCommunity";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
+
 
 export default function Home() {
   const theme = useTheme();
@@ -16,9 +17,11 @@ export default function Home() {
     minHeight: "100%",
     width: "100%",
   }}>
-    <Box>
-      <h1>Home</h1>
-    </Box>
+    <Grid container spacing={1}>
+      <Grid item xs={12} lg={8} sx={{border: "1px solid white"}}>
+        
+      </Grid>
+    </Grid>
     {!isUserAuthenticated() && <SideBarPopularCommunity />}
   </Box>
   );

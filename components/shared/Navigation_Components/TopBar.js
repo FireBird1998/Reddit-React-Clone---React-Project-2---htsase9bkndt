@@ -27,6 +27,8 @@ import { useTheme } from "@emotion/react";
 import { LayoutContext } from "@/context/LayoutContext";
 import { AuthContext } from "@/context/AuthContext";
 
+import AuthNavDropDown from "./AuthNavDropDown";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius * 5,
@@ -67,7 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const TopBar = () => {
+const TopBar = ({themeSwitch}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const theme = useTheme();
@@ -187,7 +189,7 @@ const TopBar = () => {
         <Toolbar sx={{ justifyContent: "space-between" }}>
           {/* this is for the logo and menu part */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
+            {!isUserAuthenticated() && <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -196,7 +198,7 @@ const TopBar = () => {
               sx={{ mr: 2, display: { lg: "none", md: "block" } }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton>}
             <Typography
               variant="h6"
               noWrap
@@ -207,9 +209,15 @@ const TopBar = () => {
             </Typography>
           </Box>
           {/* this box will show the authouncitated menu */}
-          {!isUserAuthenticated() && (
-          <Box sx={{ flexGrow: 1 }}>
-
+          {isUserAuthenticated() && (
+          <Box sx={{ 
+            flexGrow: 1, 
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            }}>
+            {/* {themeSwitch()} */}
+            <AuthNavDropDown />
           </Box>
           )}
           {/* search part */}
@@ -281,17 +289,17 @@ const TopBar = () => {
                 <Button
                   variant="outlined"
                   sx={{
-                    color: "white",
-                    borderColor: "white",
+                    color: theme.palette.typography.color,
+                    borderColor: theme.palette.typography.color,
                     mx: 1,
                     borderRadius: "50px",
                     "&:focus": {
-                      borderColor: "white",
-                      color: "white",
+                      borderColor: theme.palette.typography.color,
+                      color: theme.palette.typography.color,
                     },
                     "&:hover": {
-                      borderColor: "white",
-                      color: "white",
+                      borderColor: theme.palette.typography.color,
+                      color: theme.palette.typography.color,
                     },
                     display: { xs: "none", lg: "inline-flex" },
                   }}
