@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
-import { Box, Switch } from "@mui/material";
+import { Box, Switch, Container } from "@mui/material";
 
 
 import { LayoutProvider } from "@/context/LayoutContext";
@@ -9,12 +9,12 @@ import { AuthProvider } from "@/context/AuthContext";
 
 
 import TopBar from "@/components/shared/Navigation_Components/TopBar";
-import SideBar from "@/components/shared/Navigation_Components/SideBar";
-import { Container } from "@mui/material";
+
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import MotherSideBar from "@/components/shared/Navigation_Components/MotherSideBar";
+import RootLayoutSupport from "@/components/Layout_Support/RootLayoutSupport";
 
 
 const darkMode = {
@@ -163,24 +163,9 @@ const Layout = ({ children }) => {
                 }}
               >
                 <MotherSideBar  />
-                <Box
-                  sx={{
-                    padding: "20px",
-                    position: "absolute",
-                    width: {
-                      xs: "100%", // take full width on xs screens
-                      lg: "calc(100% - 250px)", // subtract width of drawer
-                      xl: "calc(100% - 250px)", // subtract width of drawer
-                    },
-                    height: "100%",
-                    overflow: "auto",
-                    bgcolor: "background.default",
-                    right: 0,
-                    top: 0,
-                  }}
-                >
+                <RootLayoutSupport>
                   {children}
-                </Box>
+                </RootLayoutSupport>
               </Container>
             </main>
           </AuthProvider>

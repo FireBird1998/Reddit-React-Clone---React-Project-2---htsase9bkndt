@@ -7,8 +7,8 @@ const sidebarLinks1 = [
     icon: HomeOutlinedIcon,
   },
   {
-    title: 'popular',
-    url: '/popular',
+    title: 'Popular',
+    url: '/r/popular',
     icon: OutboundOutlinedIcon,
   },
 ];

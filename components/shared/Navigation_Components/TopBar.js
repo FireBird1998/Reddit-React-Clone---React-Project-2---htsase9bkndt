@@ -1,33 +1,44 @@
 "use client";
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
-import OutboundOutlinedIcon from '@mui/icons-material/OutboundOutlined';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
-
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+  Button,
+  Divider,
+  Tooltip,
+} from "@mui/material";
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  Mail as MailIcon,
+  Notifications as NotificationsIcon,
+  MoreVert as MoreIcon,
+  QrCodeScanner as QrCodeScannerIcon,
+  OutboundOutlined as OutboundOutlinedIcon,
+  TextsmsOutlined as TextsmsOutlinedIcon,
+  LoginOutlined as LoginOutlinedIcon,
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon,
+  Logout as LogoutIcon,
+  NotificationsOutlined,
+  Add as AddIcon,
+} from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
+import { useRouter } from "next/navigation";
 import { LayoutContext } from "@/context/LayoutContext";
 import { AuthContext } from "@/context/AuthContext";
-
 import AuthNavDropDown from "./AuthNavDropDown";
+import AvatarEl from "./AvatarEl";
+import MessageComponents from "./MessageComponents";
+import NotificationComponent from "./NotificationComponent";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,11 +80,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const TopBar = ({themeSwitch}) => {
+const TopBar = ({ themeSwitch }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const theme = useTheme();
-  const { isUserAuthenticated } = React.useContext(AuthContext);
+  const { isUserAuthenticated, logout, authState } =
+    React.useContext(AuthContext);
   const router = useRouter();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -100,7 +112,13 @@ const TopBar = ({themeSwitch}) => {
 
   const goToLogin = () => {
     router.push("/signIn");
-  }
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleMenuClose();
+    console.log("Logged out");
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -118,9 +136,42 @@ const TopBar = ({themeSwitch}) => {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      MenuListProps={{
+        // Add this prop
+        sx: {
+          width: "250px",
+        },
+      }}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Divider />
+      <Typography
+        variant="div"
+        sx={{
+          px: 2,
+          py: 1,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ display: "flex" }}>
+          {theme.palette.mode === "light" ? (
+            <LightModeIcon />
+          ) : (
+            <DarkModeIcon />
+          )}
+        </span>
+        <span>&nbsp;View Options</span>
+      </Typography>
+      <MenuItem>
+        {theme.palette.mode === "light" ? "Light Mode" : "Dark Mode"}
+        {themeSwitch()}
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleLogout}>
+        <LogoutIcon />
+        &nbsp;Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -169,14 +220,12 @@ const TopBar = ({themeSwitch}) => {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <AvatarEl />
         </IconButton>
-        <p>Profile</p>
+        <p>{authState?.userInfo?.name}</p>
       </MenuItem>
     </Menu>
   );
-
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -189,16 +238,18 @@ const TopBar = ({themeSwitch}) => {
         <Toolbar sx={{ justifyContent: "space-between" }}>
           {/* this is for the logo and menu part */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            {!isUserAuthenticated() && <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { lg: "none", md: "block" } }}
-            >
-              <MenuIcon />
-            </IconButton>}
+            {!isUserAuthenticated() && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { lg: "none", md: "block" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography
               variant="h6"
               noWrap
@@ -210,15 +261,16 @@ const TopBar = ({themeSwitch}) => {
           </Box>
           {/* this box will show the authouncitated menu */}
           {isUserAuthenticated() && (
-          <Box sx={{ 
-            flexGrow: 1, 
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            }}>
-            {/* {themeSwitch()} */}
-            <AuthNavDropDown />
-          </Box>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <AuthNavDropDown />
+            </Box>
           )}
           {/* search part */}
           <Search>
@@ -234,30 +286,31 @@ const TopBar = ({themeSwitch}) => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {isUserAuthenticated() && (
               <>
-                <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <Tooltip title="Go to Popular">
                   <IconButton
                     size="large"
                     aria-label="popular"
                     color="inherit"
+                    sx={{ borderRadius: 20 / 5 }}
+                    onClick={() => router.push("/r/popular")}
                   >
                     <OutboundOutlinedIcon />
                   </IconButton>
-                  <IconButton 
-                    size="large" 
-                    aria-label="chat" 
-                    color="inherit"
-                  >
-                    <TextsmsOutlinedIcon />
-                  </IconButton>
+                </Tooltip>
+                <MessageComponents />
+                <NotificationComponent />
+                <Tooltip title="Create Post">
                   <IconButton
                     size="large"
-                    aria-label="show 17 new notifications"
+                    aria-label="create post"
                     color="inherit"
+                    sx={{ borderRadius: 20 / 5 }}
                   >
-                    <Badge badgeContent={17} color="error">
-                      <NotificationsIcon />
-                    </Badge>
+                    <AddIcon />
                   </IconButton>
+                </Tooltip>
+                <Tooltip title="User Profile">
                   <IconButton
                     size="large"
                     edge="end"
@@ -266,11 +319,18 @@ const TopBar = ({themeSwitch}) => {
                     aria-haspopup="true"
                     onClick={handleProfileMenuOpen}
                     color="inherit"
+                    sx={{
+                      ml: 2,
+                      borderRadius: 20 / 2,
+                    }}
                   >
-                    <AccountCircle />
+                    <AvatarEl />
+                    <span>&nbsp;{authState.userInfo.name}</span>
                   </IconButton>
-                </Box>
-                <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                </Tooltip>
+              </Box>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <Tooltip title="Show More">
                   <IconButton
                     size="large"
                     aria-label="show more"
@@ -281,9 +341,11 @@ const TopBar = ({themeSwitch}) => {
                   >
                     <MoreIcon />
                   </IconButton>
-                </Box>
-              </>
+                </Tooltip>
+              </Box>
+            </>
             )}
+            {/* This is when user is not logged in */}
             {!isUserAuthenticated() && (
               <Box sx={{}}>
                 <Button
@@ -325,12 +387,19 @@ const TopBar = ({themeSwitch}) => {
                   }}
                   onClick={() => goToLogin()}
                 >
-                  <LoginOutlinedIcon sx={{
-                    display: { xs: "inline-flex", lg: "none" },
-                  }} />
-                  <Typography variant="span" sx={{
-                    display: { xs: "none", lg: "inline-flex" },
-                  }}>Log In</Typography>
+                  <LoginOutlinedIcon
+                    sx={{
+                      display: { xs: "inline-flex", lg: "none" },
+                    }}
+                  />
+                  <Typography
+                    variant="span"
+                    sx={{
+                      display: { xs: "none", lg: "inline-flex" },
+                    }}
+                  >
+                    Log In
+                  </Typography>
                 </Button>
               </Box>
             )}

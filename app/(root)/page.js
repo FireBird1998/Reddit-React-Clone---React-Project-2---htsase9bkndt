@@ -17,8 +17,8 @@ export default function Home() {
     minHeight: "100%",
     width: "100%",
   }}>
-    <Grid container spacing={1}>
-      <Grid item xs={12} lg={8} sx={{border: "1px solid white"}}>
+    <Grid container spacing={1} justifyContent={isUserAuthenticated() ? `center` : ``}>
+      <Grid item xs={12} lg={isUserAuthenticated() ? 10 : 8} sx={{border: "1px solid white"}}>
         
       </Grid>
     </Grid>

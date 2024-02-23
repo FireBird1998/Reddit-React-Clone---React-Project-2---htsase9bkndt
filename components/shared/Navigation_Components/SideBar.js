@@ -14,6 +14,7 @@ import { Toolbar } from "@mui/material";
 
 import { sidebarLinks1 } from "@/Constants";
 import { useTheme } from "@emotion/react";
+import { useRouter } from "next/navigation";
 
 
 const drawerWidth = 240;
@@ -21,9 +22,8 @@ const drawerWidth = 240;
 
 function SideBar() {
   const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } = React.useContext(LayoutContext);
-  const { isUserAuthenticated } = React.useContext(AuthContext);
   const theme = useTheme();
-
+  const router = useRouter();
 
   const drawer = (
     <div>
@@ -36,6 +36,8 @@ function SideBar() {
               sx={{
                 color: theme.palette.typography.color,
               }}
+              selected={router.pathname === link.url}
+              onClick={() => router.push(link.url)}
             >
               <ListItemIcon
                 sx={{
