@@ -9,7 +9,7 @@ import { Divider, Typography, useMediaQuery } from "@mui/material";
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { sidebarLinks1 } from "@/Constants";
+import { sidebarLinks1, otherLinks } from "@/Constants";
 
 import {
   usePopupState,
@@ -18,7 +18,6 @@ import {
 } from "material-ui-popup-state/hooks";
 
 const CustomButton = ({ popupState, children, ...otherProps }) => {
-  
   return (
     <Button
       variant="contained"
@@ -29,6 +28,10 @@ const CustomButton = ({ popupState, children, ...otherProps }) => {
         backgroundColor: "rgba(0, 0, 0, 0.4)",
         display: "flex",
         justifyContent: "space-between",
+        px: 2,
+        py: 1,
+        borderRadius: "10px",
+        mx: 1,
       }}
     >
       {children}
@@ -40,7 +43,7 @@ const AuthNavDropDown = () => {
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
   const pathname = usePathname();
   const router = useRouter();
-  const isMobile = useMediaQuery("(max-width:600px)");
+  const isMobile = useMediaQuery("(max-width:1100px)");
   const [icon, setIcon] = useState(null);
   const [name, setName] = useState("");
 
@@ -49,10 +52,14 @@ const AuthNavDropDown = () => {
       const Icon1 = sidebarLinks1[0].icon;
       setIcon(<Icon1 />);
       setName(sidebarLinks1[0].title);
-    } else if(pathname === sidebarLinks1[1].url){
+    } else if (pathname === sidebarLinks1[1].url) {
       const Icon2 = sidebarLinks1[1].icon;
       setIcon(<Icon2 />);
       setName(sidebarLinks1[1].title);
+    } else if (pathname === otherLinks[0].url) {
+      const Icon3 = otherLinks[0].icon;
+      setIcon(<Icon3 />);
+      setName(otherLinks[0].title);
     } else {
       setIcon(null);
       setName("Other");
@@ -74,13 +81,16 @@ const AuthNavDropDown = () => {
         {...bindMenu(popupState)}
         MenuListProps={{
           sx: {
-            width: "180px",
+            width: "250px",
           },
         }}
       >
         <MenuItem onClick={popupState.close}>Cake</MenuItem>
         <Divider />
-        <Typography variant="p" sx={{ ml: 2 , pb: 2,  textDecoration: "underline"}}>
+        <Typography
+          variant="p"
+          sx={{ ml: 2, pb: 2, textDecoration: "underline" }}
+        >
           Feeds
         </Typography>
         {sidebarLinks1.map((link) => {
@@ -98,7 +108,31 @@ const AuthNavDropDown = () => {
             >
               <link.icon />
               {link.title}
-              
+            </MenuItem>
+          );
+        })}
+        <Divider />
+        <Typography
+          variant="p"
+          sx={{ ml: 2, pb: 2, textDecoration: "underline" }}
+        >
+          Others
+        </Typography>
+        {otherLinks.map((link) => {
+          return (
+            <MenuItem
+              key={link.title}
+              onClick={() => handleMenuItemClick(link)}
+              sx={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+                width: "100%",
+                gap: "10px",
+              }}
+            >
+              <link.icon />
+              {link.title}
             </MenuItem>
           );
         })}

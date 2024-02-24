@@ -49,13 +49,13 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
+  width: "70%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: "70%", // take 70% of the width on medium screens
+    width: "50%", // take 70% of the width on medium screens
   },
   [theme.breakpoints.up("md")]: {
-    width: "60%", // take 60% of the width on large screens
+    width: "40%", // take 60% of the width on large screens
   },
 }));
 
@@ -284,6 +284,7 @@ const TopBar = ({ themeSwitch }) => {
           </Search>
           {/* this is for the notification and profile part and when not authencated shows login in and get app button */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            {/* this is when user is login and this contain popular message and notification create post  */}
             {isUserAuthenticated() && (
               <>
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -306,6 +307,7 @@ const TopBar = ({ themeSwitch }) => {
                     aria-label="create post"
                     color="inherit"
                     sx={{ borderRadius: 20 / 5 }}
+                    onClick={() => router.push("/submit")}
                   >
                     <AddIcon />
                   </IconButton>
