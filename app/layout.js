@@ -17,7 +17,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <CssBaseline />
-
       <body className={inter.className}>
         <AppRouterCacheProvider>          
           {children}

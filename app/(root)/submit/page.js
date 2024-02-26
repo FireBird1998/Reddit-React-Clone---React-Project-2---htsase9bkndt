@@ -1,22 +1,26 @@
+"use client";
 import SideGuid from '@/components/CreatePost_Component/SideGuid';
+import CreatePostEl from '@/components/CreatePost_Component/CreatePostEl';
 import { Grid } from '@mui/material';
-import React from 'react';
+import { useAuthRedirect } from '@/hooks';
+
+
+
 
 
 const CreatePost = () => {
+    useAuthRedirect('/signIn');
+
     
     return (
         <Grid container component="main" justifyContent="center" alignItems="center" bgcolor="transparent">
                 <Grid item xs={9}>
-                        <h1>Create Post</h1>
+                        <CreatePostEl />
                 </Grid>
                 <Grid item xs={3}>
                         <SideGuid />
                 </Grid>
-                <Grid item xs={9}>
-                    <h1>Post Form</h1>
-                </Grid>
-
+                
         </Grid>
     )
 }

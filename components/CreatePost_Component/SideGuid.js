@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import { Box, Divider } from "@mui/material";
 import { Typography } from "@mui/material";
 import { postingGuidelines } from "@/Constants";
+import { AddBox } from "@mui/icons-material";
 
 const SideGuid = () => {
   return (
@@ -10,12 +11,12 @@ const SideGuid = () => {
       <Typography variant="h6">Posting Guidelines</Typography>
       <Divider sx={{ mt: 2, mb: 1 }} />
       {postingGuidelines.map((guideline, index) => (
-        <>
-          <Typography key={guideline.title} variant="body1">
+        <Box key={guideline.id}>
+          <Typography variant="body1">
             {index + 1}. {guideline.title}
           </Typography>
-          <Divider sx={{ my: 1 }} />
-        </>
+          <Divider  sx={{ my: 1 }} />
+        </Box>
       ))}
     </Paper>
   );
