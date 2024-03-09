@@ -53,8 +53,6 @@ export default function ToolbarPlugin() {
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
-  const [isUnorderedList, setIsUnorderedList] = useState(false);
-  const [isOrderedList, setIsOrderedList] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -77,7 +75,7 @@ export default function ToolbarPlugin() {
           setContent(serializedState);
           updateToolbar();
         });
-        
+
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
