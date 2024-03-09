@@ -57,6 +57,7 @@ const LexicalEditorEl = () => {
     borderTopRightRadius: "10px",
     border: `2px solid ${theme.palette.divider}`,
     boxShadow: theme.shadows[1],
+    minWidth: "100%",
   };
   const editorInnerStyles = {
     background: theme.palette.background.paper,
@@ -87,7 +88,7 @@ const LexicalEditorEl = () => {
           <HistoryPlugin />
           <AutoFocusPlugin />
           {/* <TreeViewPlugin /> */}
-        </Box>
+        </Box>              
       </Box>
     </LexicalComposer>
   );

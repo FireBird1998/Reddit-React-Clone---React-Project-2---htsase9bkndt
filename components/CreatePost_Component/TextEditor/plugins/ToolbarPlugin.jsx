@@ -4,6 +4,7 @@ import { mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
+  $getRoot,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   FORMAT_ELEMENT_COMMAND,
@@ -24,7 +25,7 @@ import {
   $createListNode,
 } from "@lexical/list";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 
 import { Box, Paper, IconButton, Divider } from "@mui/material";
@@ -37,10 +38,14 @@ import StrikethroughSIcon from "@mui/icons-material/StrikethroughS";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 
+import { CreatePostContext } from "@/context/CreatePostContext";
+
 const LowPriority = 1;
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
+  const { content, setContent, isSuccessful } =
+    React.useContext(CreatePostContext);
   const toolbarRef = useRef(null);
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
@@ -60,24 +65,19 @@ export default function ToolbarPlugin() {
       setIsItalic(selection.hasFormat("italic"));
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
-
     }
   }, []);
 
-  const toggleBulletList = () => {
-    setIsUnorderedList(true);
-    setIsOrderedList(false);
-    if (isOrderedList) {
-      setIsOrderedList(false);
-    }
-  }
-
+  
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
+          const serializedState = JSON.stringify(editorState);
+          setContent(serializedState);
           updateToolbar();
         });
+        
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
@@ -116,7 +116,6 @@ export default function ToolbarPlugin() {
       editor.registerCommand(
         INSERT_UNORDERED_LIST_COMMAND,
         (payload) => {
-
           let list = $createListNode("bullet");
           insertList(editor, list);
           return true;
@@ -132,7 +131,7 @@ export default function ToolbarPlugin() {
         LowPriority
       )
     );
-  }, [editor, updateToolbar]);
+  }, [editor, updateToolbar, setContent]);
 
   // import other icons...
   const buttonStyle = {
