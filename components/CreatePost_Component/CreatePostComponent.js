@@ -11,15 +11,19 @@ import {
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { CreatePostContext } from "@/context/CreatePostContext";
+import SelectCommunity from "./SelectCommunity";
 
 const CreatePostComponent = () => {
   const theme = useTheme();
-  const { title, setTitle, handlePost, snackbarOpen, snackbarMessage, setSnackbarOpen } =
+  const { title, setTitle, content, setContent, handlePost, snackbarOpen, snackbarMessage, setSnackbarOpen } =
     useContext(CreatePostContext);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  }
 
   return (
     <Box
@@ -46,6 +50,7 @@ const CreatePostComponent = () => {
         >
           Create a Post
         </Typography>
+        <SelectCommunity />
         <Divider />
         <TextField
           id="outlined-basic"
@@ -66,7 +71,28 @@ const CreatePostComponent = () => {
               },
           }}
         />
-        <LexicalEditorEl />
+        <TextField
+          id="outlined-textarea"
+          label="Content"
+          placeholder="What's on your mind?"
+          value={content}
+          onChange={handleContentChange}
+          multiline
+          rows={4}
+          sx={{
+            width: "100%",
+            mt: 2,
+            mb: 2,
+            "& label.Mui-focused": {
+              color: theme.palette.secondary.main,
+              borderColor: theme.palette.secondary.main,
+            },
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+              {
+                borderColor: theme.palette.secondary.main,
+              },
+          }}
+        />
         <Button
           variant="filled"
           sx={{

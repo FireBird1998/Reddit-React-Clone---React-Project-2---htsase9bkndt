@@ -60,7 +60,7 @@ const ChatWindow = ({ open, handleClose, handleMinimize }) => (
       position: "fixed",
       bottom: 0,
       right: 30,
-      minWidth: "300px",
+      minWidth: 300,
       height: open ? "400px" : "0px",
       display: "block",
     }}
@@ -91,7 +91,7 @@ const ChatWindow = ({ open, handleClose, handleMinimize }) => (
         <CloseIcon />
       </IconButton>
       <Typography sx={{ p: 2, mt: 3 }}>
-        The content of the chat window.
+        Feature Comming Soon - Chat with other users
       </Typography>
     </Paper>
   </Box>

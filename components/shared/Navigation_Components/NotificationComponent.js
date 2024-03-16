@@ -31,8 +31,15 @@ const MyPopper = ({ popupState }) => (
   <Popper {...bindPopper(popupState)} transition>
     {({ TransitionProps }) => (
       <Fade {...TransitionProps} timeout={350}>
-        <Paper>
-          <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
+        <Paper
+          sx={{
+            border: "1px solid",
+            p: 1,
+            bgcolor: "background.paper",
+            maxWidth: 300,
+          }}
+        >
+          <Typography sx={{ p: 2 }}>This Feature is will be Comming Soon - notification</Typography>
         </Paper>
       </Fade>
     )}

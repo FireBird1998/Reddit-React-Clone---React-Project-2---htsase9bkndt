@@ -1,39 +1,35 @@
-"use client";
-import * as React from "react";
-import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
-import { Box, Switch, Container } from "@mui/material";
+'use client';
+import * as React from 'react';
+import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import { Box, Switch, Container } from '@mui/material';
 
+import { LayoutProvider } from '@/context/LayoutContext';
+import { AuthProvider } from '@/context/AuthContext';
 
-import { LayoutProvider } from "@/context/LayoutContext";
-import { AuthProvider } from "@/context/AuthContext";
+import TopBar from '@/components/shared/Navigation_Components/TopBar';
 
-
-import TopBar from "@/components/shared/Navigation_Components/TopBar";
-
-
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import MotherSideBar from "@/components/shared/Navigation_Components/MotherSideBar";
-import RootLayoutSupport from "@/components/Layout_Support/RootLayoutSupport";
-
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import MotherSideBar from '@/components/shared/Navigation_Components/MotherSideBar';
+import RootLayoutSupport from '@/components/Layout_Support/RootLayoutSupport';
 
 const darkMode = {
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
-      main: "#0c1416",
+      main: '#0c1416',
     },
     secondary: {
-      main: "#ff0004",
+      main: '#ff0004',
     },
     background: {
-      default: "#0C1416",
-      paper: "#0C1416",
+      default: '#0C1416',
+      paper: '#0C1416',
     },
-    divider: "rgba(133,133,133,0.69)",
+    divider: 'rgba(133,133,133,0.69)',
     typography: {
-        color: "white",
-      },
+      color: 'white',
+    },
   },
 };
 
@@ -52,7 +48,7 @@ const lightMode = {
     },
     divider: 'rgba(133,133,133,0.69)',
     typography: {
-      color: "black",
+      color: 'black',
     },
   },
 };
@@ -109,15 +105,14 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-
 const Layout = ({ children }) => {
   const [theme, setTheme] = React.useState(darkTheme);
   const toggleTheme = () => {
-    setTheme(theme.palette.mode === "dark" ? lightTheme : darkTheme);
+    setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme);
   };
 
   const themeToggleSwitch = () => {
-    if (theme.palette.mode === "dark") {
+    if (theme.palette.mode === 'dark') {
       return (
         <MaterialUISwitch
           defaultChecked
@@ -136,7 +131,7 @@ const Layout = ({ children }) => {
         />
       );
     }
-  }
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -149,23 +144,21 @@ const Layout = ({ children }) => {
                 maxWidth="xl"
                 disableGutters
                 sx={{
-                  position: "relative",
+                  position: 'relative',
                   mt: {
-                    xs: "56px", // margin-top for xs and above breakpoints
-                    sm: "64px", // margin-top for sm and above breakpoints
+                    xs: '56px', // margin-top for xs and above breakpoints
+                    sm: '64px', // margin-top for sm and above breakpoints
                   },
                   padding: 0,
                   minHeight: {
-                    xs: "calc(100vh - 56px)", // viewport height - topbar height
-                    sm: "calc(100vh - 64px)", // viewport height - topbar height
+                    xs: 'calc(100vh - 56px)', // viewport height - topbar height
+                    sm: 'calc(100vh - 64px)', // viewport height - topbar height
                   },
-                  bgcolor: "background.default",
+                  bgcolor: 'background.default',
                 }}
               >
-                <MotherSideBar  />
-                <RootLayoutSupport>
-                  {children}
-                </RootLayoutSupport>
+                <MotherSideBar />
+                <RootLayoutSupport>{children}</RootLayoutSupport>
               </Container>
             </main>
           </AuthProvider>
