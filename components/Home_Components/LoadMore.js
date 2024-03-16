@@ -22,7 +22,7 @@ const LoadMore = () => {
         useInfiniteQuery('posts', fetchPosts, {
             getNextPageParam: (lastPage, pages) => {
                 // Check if the last page is empty. If it is, return undefined.
-                if (lastPage.length === 0) {
+                if (lastPage?.length === 0) {
                     return undefined;
                 }
                 return pages.length + 1;
