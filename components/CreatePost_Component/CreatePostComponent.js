@@ -39,7 +39,7 @@ const CreatePostComponent = () => {
         sx={{
           padding: 2,
           margin: 2,
-          minWidth: "650px",
+          Width: "750px",
         }}
       >
         <Typography
