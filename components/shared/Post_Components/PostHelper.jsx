@@ -24,6 +24,7 @@ import { useEffect, useContext, useState } from 'react';
 import { useTheme } from '@emotion/react';
 
 import React from 'react';
+import PostUpdateModal from './PostUpdateModal';
 
 const PostHelper = ({ post }) => {
     const { isUserAuthenticated, authState } = useContext(AuthContext);
@@ -270,13 +271,17 @@ const PostHelper = ({ post }) => {
                 >
                     <IconButton 
                         sx={{
-                            color: theme.palette.secondary.main,
+                            color: theme.palette.text.primary,
+                            '&:hover': {
+                                color: theme.palette.secondary.main,
+                            },
                         }}
                         aria-label="delete"
                         onClick={() => handleDelete()}
                     >
                         <DeleteForever />
                     </IconButton>
+                    <PostUpdateModal post={post} setSnackbarMessage={setSnackbarMessage} setSnackbarOpen={setSnackbarOpen} />
                 </Paper>
             );
         }

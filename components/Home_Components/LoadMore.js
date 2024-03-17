@@ -70,7 +70,7 @@ const LoadMore = () => {
         <div>
             {data &&
                 data?.pages?.flatMap((pageData) =>
-                    pageData.map((post) => (
+                    pageData?.map((post) => (
                         <PostEl key={post._id} post={post} />
                     )),
                 )}
