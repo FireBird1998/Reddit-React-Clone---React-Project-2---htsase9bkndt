@@ -27,6 +27,9 @@ const SelectCommunity = () => {
         setCommunity(event.target.value);
     };
 
+    if (isLoading) return 'Loading...';
+    if (isError) return `An error occurred: ${error.message}`;
+
     return (
         <FormControl sx={{ my: 1, minWidth: 300 }}>
             <InputLabel id="community"

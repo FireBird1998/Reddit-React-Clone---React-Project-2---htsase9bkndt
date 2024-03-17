@@ -6,7 +6,14 @@ import {
     ArrowDownward,
     CommentOutlined,
 } from '@mui/icons-material';
-import { CardActions, IconButton, Badge, Snackbar, Paper } from '@mui/material';
+import {
+    CardActions,
+    IconButton,
+    Badge,
+    Snackbar,
+    Paper,
+    Divider,
+} from '@mui/material';
 import axios from '@/utility/axiosConfig';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/navigation';
@@ -53,6 +60,18 @@ const PostHelper = ({ post }) => {
         }
     };
 
+    const handleComment = () => {
+        if (isUserAuthenticated()) {
+            Router.push(`/r/post/${post._id}`);
+        } else {
+            setSnackbarMessage('Please login to comment');
+            setSnackbarOpen(true);
+            setTimeout(() => {
+                Router.push('/auth/signin');
+            }, 2000);
+        }
+    };
+
     const upVote = useMutation(
         () => {
             return axios.post(`/reddit/like/${post._id}`);
@@ -71,7 +90,10 @@ const PostHelper = ({ post }) => {
                 console.error('Error upvoting post:', error);
                 setSnackbarMessage(error.response.data.message);
                 setSnackbarOpen(true);
-                if (error.response.data.message === 'You already liked this post') {
+                if (
+                    error.response.data.message ===
+                    'You already liked this post'
+                ) {
                     setIsLiked(true);
                     setIsDisliked(false);
                 }
@@ -100,7 +122,10 @@ const PostHelper = ({ post }) => {
                 // console.error('Error downvoting post:', error);
                 setSnackbarMessage(error.response.data.message);
                 setSnackbarOpen(true);
-                if (error.response.data.message === `You haven't liked this post yet`) {
+                if (
+                    error.response.data.message ===
+                    `You haven't liked this post yet`
+                ) {
                     setIsDisliked(true);
                 }
             },
@@ -167,6 +192,12 @@ const PostHelper = ({ post }) => {
                 >
                     <ArrowDownwardOutlined />
                 </IconButton>
+                <Divider orientation="vertical" flexItem />
+                <IconButton aria-label="comment" onClick={() => handleComment()}>
+                    <Badge badgeContent={post.commentCount} color="secondary">
+                        <CommentOutlined />
+                    </Badge>
+                </IconButton>
             </Paper>
         );
     };
@@ -178,11 +209,6 @@ const PostHelper = ({ post }) => {
     return (
         <CardActions disableSpacing>
             {upvoteDownvote()}
-            <IconButton aria-label="comment">
-                <Badge badgeContent={post.commentCount} color="secondary">
-                    <CommentOutlined />
-                </Badge>
-            </IconButton>
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={4000}

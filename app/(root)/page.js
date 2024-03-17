@@ -36,7 +36,7 @@ export default function Home() {
                     </Grid>
                 ) : (
                     <Grid item xs={12} lg={8}>
-                        <CreatePostHomeEl />
+                        {/* <CreatePostHomeEl /> */}
                         <FilterBar />
                         <PostContainer />
                     </Grid>
@@ -46,8 +46,12 @@ export default function Home() {
                         <RPremiumSideBar />
                     </Grid>
                 )}
+                {!isUserAuthenticated() && (
+                    <Grid item xs={false} lg={3}>
+                        <SideBarPopularCommunity />
+                    </Grid>
+                )}
             </Grid>
-            {!isUserAuthenticated() && <SideBarPopularCommunity />}
         </Box>
     );
 }

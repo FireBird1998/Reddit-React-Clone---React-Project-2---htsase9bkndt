@@ -149,9 +149,6 @@ const SideBarPopularCommunity = () => {
           lg: "block",
           xl: "block",
         },
-        position: "absolute",
-        top: "0",
-        right: "0",
         transition: "all 0.7s",
       }}
     >
