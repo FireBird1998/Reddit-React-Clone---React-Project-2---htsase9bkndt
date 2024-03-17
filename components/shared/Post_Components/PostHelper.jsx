@@ -145,6 +145,8 @@ const PostHelper = ({ post }) => {
             onSuccess: (data) => {
                 let ratio = data.likeCount - data.dislikeCount;
                 setDisLikeLike(ratio);
+                setIsLiked(data.isLiked);
+                setIsDisliked(data.isDisliked);
             },
         },
     );
@@ -220,16 +222,3 @@ const PostHelper = ({ post }) => {
 };
 
 export default PostHelper;
-
-// const getComments = useQuery(
-//     ['comments', post._id],
-//     async () => {
-//         const { data } = await axios.get(`/reddit/post/${post._id}/comments`);
-//         return data.data;
-//     },
-// );
-// const postComment = useMutation(
-//     () => {
-
-//     }
-// );
