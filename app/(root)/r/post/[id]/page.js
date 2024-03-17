@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material';
 import {
     Box,
     Typography,
@@ -16,14 +17,23 @@ import {
     Snackbar,
 } from '@mui/material';
 import PostEl from '@/components/shared/Post_Components/PostEl';
+import { AuthContext } from '@/context/AuthContext';
+import { useAuthRedirect } from '@/hooks';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const page = () => {
+    useAuthRedirect("/");
     const [comment, setComment] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const queryClient = useQueryClient();
     const { id } = useParams();
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const { authState } = useContext(AuthContext);
+
+    const userID = authState?.userInfo?._id;
+
     const fetchPost = async () => {
         const { data } = await axios.get(`/reddit/post/${id}`);
         return data.data;
@@ -38,6 +48,12 @@ const page = () => {
         });
         return data.data;
     };
+
+    const deleteCommentRequest = async (commentId) => {
+        const { data } = await axios.delete(`/reddit/comment/${commentId}`);
+        return data.data;
+    };
+
     const { data, isLoading, isError, error } = useQuery('post', fetchPost);
 
     const {
@@ -65,6 +81,28 @@ const page = () => {
             },
         },
     );
+
+    const deleteCommentMutation = useMutation(
+        'deleteComment',
+        deleteCommentRequest,
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('comments');
+                queryClient.invalidateQueries('post');
+                setSnackbarMessage('Comment Deleted');
+                setSnackbarOpen(true);
+            },
+            onError: (error) => {
+                console.error(error);
+                setSnackbarMessage(error.message);
+                setSnackbarOpen(true);
+            },
+        },
+    );
+
+    const handleDeleteComment = (commentId) => {
+        deleteCommentMutation.mutate(commentId);
+    };
 
     const handleComment = () => {
         if (comment.length > 0) {
@@ -110,12 +148,48 @@ const page = () => {
                 <Box sx={{ p: 2 }}>
                     {comments.map((comment) => (
                         <Paper key={comment._id} sx={{ p: 2, my: 2 }}>
-                            <Typography variant="h6">
-                                No Data, Only ID
-                            </Typography>
-                            <Typography variant="body1">
-                                {comment.content}
-                            </Typography>
+                            <Box
+                                display="flex"
+                                flexDirection={isMobile ? 'column' : 'row'}
+                                justifyContent="space-between"
+                                alignItems={isMobile ? 'flex-start' : 'center'}
+                            >
+                                <div>
+                                    <Typography variant="h6">
+                                        No Data, Only ID
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {comment.content}
+                                    </Typography>
+                                </div>
+                                {userID === comment.author && (
+                                    <Button
+                                        variant="filled"
+                                        onClick={() =>
+                                            handleDeleteComment(comment._id)
+                                        }
+                                        sx={{
+                                            bgcolor:
+                                                theme.palette.secondary.main,
+                                            color: theme.palette.typography,
+                                            mt: isMobile ? 2 : 0,
+                                            '&:focus': {
+                                                outline: 'none',
+                                                bgcolor:
+                                                    theme.palette.secondary
+                                                        .main,
+                                            },
+                                            '&:hover': {
+                                                bgcolor:
+                                                    theme.palette.secondary
+                                                        .dark,
+                                            },
+                                        }}
+                                    >
+                                        <DeleteIcon />
+                                    </Button>
+                                )}
+                            </Box>
                         </Paper>
                     ))}
                 </Box>

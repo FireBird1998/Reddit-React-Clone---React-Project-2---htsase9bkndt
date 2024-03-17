@@ -5,6 +5,7 @@ import {
     ArrowUpward,
     ArrowDownward,
     CommentOutlined,
+    DeleteForever,
 } from '@mui/icons-material';
 import {
     CardActions,
@@ -13,6 +14,7 @@ import {
     Snackbar,
     Paper,
     Divider,
+    Box,
 } from '@mui/material';
 import axios from '@/utility/axiosConfig';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -24,7 +26,7 @@ import { useTheme } from '@emotion/react';
 import React from 'react';
 
 const PostHelper = ({ post }) => {
-    const { isUserAuthenticated } = useContext(AuthContext);
+    const { isUserAuthenticated, authState } = useContext(AuthContext);
     const [disLikeLike, setDisLikeLike] = useState(
         post.likeCount - post.dislikeCount,
     );
@@ -37,6 +39,17 @@ const PostHelper = ({ post }) => {
     const Router = useRouter();
     const theme = useTheme();
 
+    const deletePostRequest = async () => {
+        const response = await axios.delete(`/reddit/post/${post._id}`);
+        if (response.status !== 204) {
+            console.error('Post not deleted');
+            throw new Error('Post not deleted');
+
+        }
+    
+        return response.data;
+    };
+
     const handleUpVote = () => {
         if (isUserAuthenticated()) {
             upVote.mutate();
@@ -48,6 +61,7 @@ const PostHelper = ({ post }) => {
             }, 2000);
         }
     };
+
     const handleDownVote = () => {
         if (isUserAuthenticated()) {
             downVote.mutate();
@@ -65,6 +79,18 @@ const PostHelper = ({ post }) => {
             Router.push(`/r/post/${post._id}`);
         } else {
             setSnackbarMessage('Please login to comment');
+            setSnackbarOpen(true);
+            setTimeout(() => {
+                Router.push('/auth/signin');
+            }, 2000);
+        }
+    };
+
+    const handleDelete = () => {
+        if (isUserAuthenticated()) {
+            deletePost.mutate();
+        } else {
+            setSnackbarMessage('Please login to delete post');
             setSnackbarOpen(true);
             setTimeout(() => {
                 Router.push('/auth/signin');
@@ -135,6 +161,25 @@ const PostHelper = ({ post }) => {
         },
     );
 
+    const deletePost = useMutation(
+        deletePostRequest,
+        {
+            onSuccess: (data) => {
+                console.log('Post deleted');
+                queryClient.invalidateQueries('posts');
+                setSnackbarMessage('Post deleted successfully');
+                setSnackbarOpen(true);
+            },
+            onError: (error) => {
+                console.error('Error deleting post:', error);
+                setSnackbarMessage(error.response.data.message);
+                setSnackbarOpen(true);
+            },
+            onSettled: () => {
+            },
+        },
+    );
+
     const { data, error, isError } = useQuery(
         ['likeCount', post._id],
         async () => {
@@ -195,7 +240,10 @@ const PostHelper = ({ post }) => {
                     <ArrowDownwardOutlined />
                 </IconButton>
                 <Divider orientation="vertical" flexItem />
-                <IconButton aria-label="comment" onClick={() => handleComment()}>
+                <IconButton
+                    aria-label="comment"
+                    onClick={() => handleComment()}
+                >
                     <Badge badgeContent={post.commentCount} color="secondary">
                         <CommentOutlined />
                     </Badge>
@@ -204,13 +252,49 @@ const PostHelper = ({ post }) => {
         );
     };
 
+    const userSpecificELements = () => {
+        if (
+            isUserAuthenticated() &&
+            authState.userInfo._id === post.author._id
+        ) {
+            return (
+                <Paper
+                    elevation={5}
+                    sx={{
+                        padding: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 1,
+                    }}
+                >
+                    <IconButton 
+                        sx={{
+                            color: theme.palette.secondary.main,
+                        }}
+                        aria-label="delete"
+                        onClick={() => handleDelete()}
+                    >
+                        <DeleteForever />
+                    </IconButton>
+                </Paper>
+            );
+        }
+    };
+
     if (isError) {
         console.error('Error fetching like count:', error);
     }
 
     return (
         <CardActions disableSpacing>
-            {upvoteDownvote()}
+            <Box sx={{
+                display: 'flex',
+                gap: 1,
+            }}>
+                {upvoteDownvote()}
+                {userSpecificELements()}
+            </Box>
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={4000}
