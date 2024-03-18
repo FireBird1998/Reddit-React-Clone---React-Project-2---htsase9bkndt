@@ -211,7 +211,7 @@ const Layout = ({ children }) => {
                                             xs: 'calc(100vh - 56px)', // viewport height - topbar height
                                             sm: 'calc(100vh - 64px)', // viewport height - topbar height
                                         },
-                                        bgcolor: 'background.default',
+                                        
                                     }}
                                 >
                                     <MotherSideBar />

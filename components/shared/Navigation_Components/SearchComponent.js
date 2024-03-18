@@ -5,11 +5,16 @@ import {
     Typography,
     InputBase,
     IconButton,
+    Button,
     Box,
     useMediaQuery,
     Divider,
     Skeleton,
     Stack,
+    Paper,
+    Card,
+    CardContent,
+    CardActions,
 } from '@mui/material';
 import { styled, alpha, useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -68,7 +73,7 @@ const SearchComponent = () => {
         top: '45%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '90%', // adjust as needed
+        width: isMobile ? '90%' : isTablet ? '80%' : isWeb ? '60%' : '50%',
         height: '90%', // adjust as needed
         bgcolor: 'background.paper',
         border: '2px solid #000',
@@ -155,24 +160,26 @@ const SearchComponent = () => {
                         onChange={(e) => handleSearch(e)}
                     />
                 </Search>
-                <Box sx={{
-                    height: '90%',
-                    overflow: 'auto',   
-                    mt: 2, 
-                    '&::-webkit-scrollbar': {
-                        width: '10px',
-                    },
-                    '&::-webkit-scrollbar-track': {
-                        background: 'transparent',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                        background: '#888',
-                        borderRadius: '20px',
-                    },
-                    '&::-webkit-scrollbar-thumb:hover': {
-                        background: '#555',
-                    },
-                }}>
+                <Box
+                    sx={{
+                        height: '90%',
+                        overflow: 'auto',
+                        mt: 2,
+                        '&::-webkit-scrollbar': {
+                            width: '10px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            background: 'transparent',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            background: '#888',
+                            borderRadius: '20px',
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                            background: '#555',
+                        },
+                    }}
+                >
                     <SearchResbyTitle
                         searchResByTitle={searchResByTitle}
                         isLoadingByTitle={isLoadingByTitle}
@@ -248,7 +255,7 @@ const SearchResbyTitle = ({
             <Divider />
             {searchResByTitle &&
                 searchResByTitle.data.map((post) => (
-                    <SearchPostELement key={post._id} post={post} />
+                    <SearchCardByTitle key={post._id} post={post} />
                 ))}
         </Box>
     );
@@ -375,6 +382,67 @@ const SearchPostELement = ({ post }) => {
         <Box>
             <Typography variant="h5">{post.title}</Typography>
             <Typography variant="p">{post.content}</Typography>
+        </Box>
+    );
+};
+
+const SearchCardByTitle = ({ post }) => {
+    const theme = useTheme();
+    const router = useRouter();
+    const { toggleModal } = useContext(ModalContext);
+    return (
+        <Box
+            sx={{
+                mt: 2,
+                mr: 2,
+            }}
+        >
+            <Card variant="outlined" elevation={4}>
+                <CardContent>
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {post.title}
+                    </Typography>
+                    <Typography
+                        variant="p"
+                        sx={{
+                            textAlign: 'right',
+                            width: '100%',
+                        }}
+                    >
+                        -{post.author.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        onClick={() => {
+                            toggleModal();
+                            router.push(`/r/post/${post._id}`);
+                        }}
+                        sx={{
+                            backgroundColor: alpha(
+                                theme.palette.primary.main,
+                                0.5,
+                            ), // Use semi-transparent primary color from theme
+                            '&:hover': {
+                                backgroundColor: alpha(
+                                    theme.palette.secondary.dark,
+                                    0.5,
+                                ), // Use semi-transparent dark primary color on hover
+                            },
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Read More
+                    </Button>
+                </CardActions>
+            </Card>
         </Box>
     );
 };
