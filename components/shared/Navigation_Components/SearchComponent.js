@@ -313,7 +313,7 @@ const SearchResbyContent = ({
             <Divider />
             {searchResByContent &&
                 searchResByContent.data.map((post) => (
-                    <SearchPostELement key={post._id} post={post} />
+                    <SearchCardByContent key={post._id} post={post} />
                 ))}
         </Box>
     );
@@ -371,7 +371,7 @@ const SearchResbyAuthor = ({
             <Divider />
             {searchResByAuthor &&
                 searchResByAuthor.data.map((post) => (
-                    <SearchPostELement key={post._id} post={post} />
+                    <SearchCardByContent key={post._id} post={post} />
                 ))}
         </Box>
     );
@@ -408,6 +408,67 @@ const SearchCardByTitle = ({ post }) => {
                         }}
                     >
                         {post.title}
+                    </Typography>
+                    <Typography
+                        variant="p"
+                        sx={{
+                            textAlign: 'right',
+                            width: '100%',
+                        }}
+                    >
+                        -{post.author.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        onClick={() => {
+                            toggleModal();
+                            router.push(`/r/post/${post._id}`);
+                        }}
+                        sx={{
+                            backgroundColor: alpha(
+                                theme.palette.primary.main,
+                                0.5,
+                            ), // Use semi-transparent primary color from theme
+                            '&:hover': {
+                                backgroundColor: alpha(
+                                    theme.palette.secondary.dark,
+                                    0.5,
+                                ), // Use semi-transparent dark primary color on hover
+                            },
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Read More
+                    </Button>
+                </CardActions>
+            </Card>
+        </Box>
+    );
+};
+const SearchCardByContent = ({ post }) => {
+    const theme = useTheme();
+    const router = useRouter();
+    const { toggleModal } = useContext(ModalContext);
+    return (
+        <Box
+            sx={{
+                mt: 2,
+                mr: 2,
+            }}
+        >
+            <Card variant="outlined" elevation={4}>
+                <CardContent>
+                    <Typography
+                        variant="p"
+                        sx={{
+                            display: 'block',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {post.content}
                     </Typography>
                     <Typography
                         variant="p"
