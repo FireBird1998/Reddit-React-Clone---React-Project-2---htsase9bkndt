@@ -1,10 +1,19 @@
+"use cleint";
 import { Paper, IconButton, Typography } from "@mui/material";
 import React from "react";
 import RocketOutlinedIcon from "@mui/icons-material/RocketOutlined";
 import LocalFireDepartmentOutlinedIcon from "@mui/icons-material/LocalFireDepartmentOutlined";
 import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
+import { useMediaQuery, useTheme } from "@mui/material";
+
+
 const FilterBar = () => {
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+
   return (
     <Paper
       sx={{
@@ -16,11 +25,12 @@ const FilterBar = () => {
         width: "100%",
         display: "flex",
         alignItems: "center",
+        // flexDirection: isMobile ? "column" : "row",
         justifyContent: "center",
       }}
     >
       <IconButton
-        size="large"
+        size={isMobile ? "medium" : "large"}
         sx={{
           borderRadius: "10px",
           marginLeft: "10px",
@@ -48,13 +58,14 @@ const FilterBar = () => {
             fontFamily: '"IBM Plex Sans", sans-serif', // Use a sans-serif font
             fontWeight: "700", // Make the font semi-bold
             marginLeft: "5px", // Add some space between the icon and the text
+            fontSize: { xs: "0.75rem", sm: "1rem"},
           }}
         >
           Best
         </Typography>
       </IconButton>
       <IconButton
-        size="large"
+        size={isMobile ? "medium" : "large"}
         sx={{
           borderRadius: "10px",
           marginLeft: "10px",
@@ -82,13 +93,14 @@ const FilterBar = () => {
             fontFamily: '"IBM Plex Sans", sans-serif', // Use a sans-serif font
             fontWeight: "700", // Make the font semi-bold
             marginLeft: "5px", // Add some space between the icon and the text
+            fontSize: { xs: "0.75rem", sm: "1rem"},
           }}
         >
           Hot
         </Typography>
       </IconButton>
       <IconButton
-        size="large"
+        size={isMobile ? "medium" : "large"}
         sx={{
           borderRadius: "10px",
           marginLeft: "10px",
@@ -116,13 +128,14 @@ const FilterBar = () => {
             fontFamily: '"IBM Plex Sans", sans-serif', // Use a sans-serif font
             fontWeight: "700", // Make the font semi-bold
             marginLeft: "5px", // Add some space between the icon and the text
+            fontSize: { xs: "0.75rem", sm: "1rem"},
           }}
         >
           New
         </Typography>
       </IconButton>
       <IconButton
-        size="large"
+        size={isMobile ? "medium" : "large"}
         sx={{
           borderRadius: "10px",
           marginLeft: "10px",
@@ -150,6 +163,7 @@ const FilterBar = () => {
             fontFamily: '"IBM Plex Sans", sans-serif', // Use a sans-serif font
             fontWeight: "700", // Make the font semi-bold
             marginLeft: "5px", // Add some space between the icon and the text
+            fontSize: { xs: "0.75rem", sm: "1rem"},
           }}
         >
           Top
