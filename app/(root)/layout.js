@@ -10,6 +10,7 @@ import { Box, Switch, Container, CssBaseline } from '@mui/material';
 
 import { LayoutProvider } from '@/context/LayoutContext';
 import { AuthProvider } from '@/context/AuthContext';
+import { ModalProvider } from '@/context/SearchModalContext';
 
 import TopBar from '@/components/shared/Navigation_Components/TopBar';
 
@@ -191,37 +192,37 @@ const Layout = ({ children }) => {
         <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                
-
-                <LayoutProvider>
-                    <AuthProvider>
-                        <main className="root">
-                            <TopBar themeSwitch={themeToggleSwitch} />
-                            <Container
-                                maxWidth="xl"
-                                disableGutters
-                                sx={{
-                                    position: 'relative',
-                                    mt: {
-                                        xs: '56px', // margin-top for xs and above breakpoints
-                                        sm: '64px', // margin-top for sm and above breakpoints
-                                    },
-                                    padding: 0,
-                                    minHeight: {
-                                        xs: 'calc(100vh - 56px)', // viewport height - topbar height
-                                        sm: 'calc(100vh - 64px)', // viewport height - topbar height
-                                    },
-                                    bgcolor: 'background.default',
-                                }}
-                            >
-                                <MotherSideBar />
-                                <RootLayoutSupport>
-                                    {children}
-                                </RootLayoutSupport>
-                            </Container>
-                        </main>
-                    </AuthProvider>
-                </LayoutProvider>
+                <ModalProvider>
+                    <LayoutProvider>
+                        <AuthProvider>
+                            <main className="root">
+                                <TopBar themeSwitch={themeToggleSwitch} />
+                                <Container
+                                    maxWidth="xl"
+                                    disableGutters
+                                    sx={{
+                                        position: 'relative',
+                                        mt: {
+                                            xs: '56px', // margin-top for xs and above breakpoints
+                                            sm: '64px', // margin-top for sm and above breakpoints
+                                        },
+                                        padding: 0,
+                                        minHeight: {
+                                            xs: 'calc(100vh - 56px)', // viewport height - topbar height
+                                            sm: 'calc(100vh - 64px)', // viewport height - topbar height
+                                        },
+                                        bgcolor: 'background.default',
+                                    }}
+                                >
+                                    <MotherSideBar />
+                                    <RootLayoutSupport>
+                                        {children}
+                                    </RootLayoutSupport>
+                                </Container>
+                            </main>
+                        </AuthProvider>
+                    </LayoutProvider>
+                </ModalProvider>
             </ThemeProvider>
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </QueryClientProvider>

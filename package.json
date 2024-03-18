@@ -22,6 +22,7 @@
     "@mui/material-nextjs": "^5.15.9",
     "axios": "^1.6.7",
     "lexical": "^0.13.1",
+    "lodash": "^4.17.21",
     "material-ui-popup-state": "^5.0.10",
     "next": "13.4.19",
     "prettier": "^3.2.5",

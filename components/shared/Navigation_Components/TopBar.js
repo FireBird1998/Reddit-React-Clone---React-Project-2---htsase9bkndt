@@ -28,58 +28,59 @@ import {
   LightMode as LightModeIcon,
   DarkMode as DarkModeIcon,
   Logout as LogoutIcon,
-  NotificationsOutlined,
   Add as AddIcon,
 } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import { useRouter } from "next/navigation";
 import { LayoutContext } from "@/context/LayoutContext";
 import { AuthContext } from "@/context/AuthContext";
+import { ModalContext } from "@/context/SearchModalContext";
 import AuthNavDropDown from "./AuthNavDropDown";
 import AvatarEl from "./AvatarEl";
 import MessageComponents from "./MessageComponents";
 import NotificationComponent from "./NotificationComponent";
+import SearchComponent from "./SearchComponent";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
   borderRadius: theme.shape.borderRadius * 5,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "70%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "50%", // take 70% of the width on medium screens
+  width: '70%',
+  [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: '50%', // take 70% of the width on medium screens
   },
-  [theme.breakpoints.up("md")]: {
-    width: "40%", // take 60% of the width on large screens
+  [theme.breakpoints.up('md')]: {
+      width: '40%', // take 60% of the width on large screens
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%", // input should take the full width of the Search component
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%', // input should take the full width of the Search component
   },
 }));
-
 const TopBar = ({ themeSwitch }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -92,6 +93,7 @@ const TopBar = ({ themeSwitch }) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const { handleDrawerToggle } = React.useContext(LayoutContext);
+  const { toggleModal } = React.useContext(ModalContext);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -273,7 +275,9 @@ const TopBar = ({ themeSwitch }) => {
             </Box>
           )}
           {/* search part */}
-          <Search>
+          <Search
+            onClick={toggleModal}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -282,6 +286,7 @@ const TopBar = ({ themeSwitch }) => {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          <SearchComponent />
           {/* this is for the notification and profile part and when not authencated shows login in and get app button */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {/* this is when user is login and this contain popular message and notification create post  */}
