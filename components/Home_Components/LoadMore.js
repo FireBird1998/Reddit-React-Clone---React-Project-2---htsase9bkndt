@@ -1,8 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
-import { getPosts } from '@/app/action';
+import { getPosts, getPostsFilter, getPostsSort } from '@/app/action';
+import { FilterBarContext } from '@/context/FilterBarContex';
 import PostEl from '@/components/shared/Post_Components/PostEl';
 import { useInfiniteQuery } from 'react-query';
 import {
@@ -16,10 +17,24 @@ import {
 } from '@mui/material';
 
 const LoadMore = () => {
-    const fetchPosts = ({ pageParam = 1 }) => getPosts(pageParam);
+    const { activeButton } = useContext(FilterBarContext);
+    const fetchPosts = ({ pageParam = 1 }) => {
+        switch (activeButton) {
+            case 'Best':
+                return getPostsFilter(pageParam, 10, {"$expr":{"$gt":["$likeCount","$dislikeCount"]}});
+            case 'Hot':
+                return getPostsFilter(pageParam, 10, '{"$expr":{"$eq":["$likeCount","$dislikeCount"]}}');
+            case 'New':
+                return getPostsSort(pageParam, 10, { "createdAt": -1 });
+            case 'Top':
+                return getPostsSort(pageParam, 10, { "likeCount": -1 });
+            default:
+                return getPosts(pageParam);
+        }
+    };
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-        useInfiniteQuery('posts', fetchPosts, {
+        useInfiniteQuery(['posts', activeButton], fetchPosts, {
             getNextPageParam: (lastPage, pages) => {
                 // Check if the last page is empty. If it is, return undefined.
                 if (lastPage?.length === 0) {
