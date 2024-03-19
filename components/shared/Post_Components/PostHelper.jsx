@@ -58,7 +58,7 @@ const PostHelper = ({ post }) => {
             setSnackbarMessage('Please login to upvote');
             setSnackbarOpen(true);
             setTimeout(() => {
-                Router.push('/auth/signin');
+                Router.push('/signIn');
             }, 2000);
         }
     };
@@ -70,7 +70,7 @@ const PostHelper = ({ post }) => {
             setSnackbarMessage('Please login to downvote');
             setSnackbarOpen(true);
             setTimeout(() => {
-                Router.push('/auth/signin');
+                Router.push('/signIn');
             }, 2000);
         }
     };
@@ -82,7 +82,7 @@ const PostHelper = ({ post }) => {
             setSnackbarMessage('Please login to comment');
             setSnackbarOpen(true);
             setTimeout(() => {
-                Router.push('/auth/signin');
+                Router.push('/signIn');
             }, 2000);
         }
     };
@@ -94,7 +94,7 @@ const PostHelper = ({ post }) => {
             setSnackbarMessage('Please login to delete post');
             setSnackbarOpen(true);
             setTimeout(() => {
-                Router.push('/auth/signin');
+                Router.push('/signIn');
             }, 2000);
         }
     };

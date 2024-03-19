@@ -1,5 +1,4 @@
 'use server';
-import PostEl from '@/components/shared/Post_Components/PostEl';
 import axios from '@/utility/axiosServerConfig';
 
 export const getPosts = async ( pageParam, limit = 10 ) => {
@@ -13,4 +12,8 @@ export const getPosts = async ( pageParam, limit = 10 ) => {
     console.error(error);
     throw error;
   }
+};
+
+export const getPostsFilter = async ( pageParam, limit = 10, filter ) => {
+  
 };
