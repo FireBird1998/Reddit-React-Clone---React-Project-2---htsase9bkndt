@@ -12,6 +12,7 @@ import {
 import { useQuery } from "react-query";
 import axios from "@/utility/axiosConfig.js";
 import { keyframes, useTheme } from "@emotion/react";
+import { useRouter } from "next/navigation";
 
 const fadeInOut = keyframes`
   0% { opacity: 1; }
@@ -24,6 +25,7 @@ const SideBarPopularCommunity = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const scrollRef = useRef(null);
   const theme = useTheme();
+  const router = useRouter();
   const fetchPopularCommunities = async () => {
     const { data } = await axios.get("/reddit/channel");
     return data.data;
@@ -196,9 +198,7 @@ const SideBarPopularCommunity = () => {
                 borderRadius: "10px",
               },
             }}
-            // onClick={() => {
-            //   window.location.href = `/r/${community.name}`;
-            // }}
+            onClick={() => router.push(`/r/${community._id}`)}
           >
             <ListItemText
               primary={`r/${community.name}`}
