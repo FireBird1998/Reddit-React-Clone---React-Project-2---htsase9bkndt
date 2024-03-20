@@ -14,39 +14,44 @@ export const getPosts = async (pageParam, limit = 10) => {
     }
 };
 
-export const getPostsFilter = async (
-  pageParam,
-  limit = 10,
-  filter = {},
-) => {
-  try {
-      const filterParam = typeof filter === 'string' ? filter : JSON.stringify(filter);
-      const { data } = await axios.get(
-          `/reddit/post?limit=${limit}&page=${pageParam}&filter=${filterParam}`,
-      );
+export const getPostsFilter = async (pageParam, limit = 10, filter = {}) => {
+    try {
+        const filterParam =
+            typeof filter === 'string' ? filter : JSON.stringify(filter);
+        const { data } = await axios.get(
+            `/reddit/post?limit=${limit}&page=${pageParam}&filter=${filterParam}`,
+        );
 
-      return data.data;
-  } catch (error) {
-      console.error(error);
-      throw error;
-  }
+        return data.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };
 
+export const getPostsSort = async (pageParam, limit = 10, sort = {}) => {
+    try {
+        const sortParam = encodeURIComponent(JSON.stringify(sort));
+        const { data } = await axios.get(
+            `/reddit/post?limit=${limit}&page=${pageParam}&sort=${sortParam}`,
+        );
 
-export const getPostsSort = async (
-  pageParam,
-  limit = 10,
-  sort = {},
-) => {
-  try {
-      const sortParam = encodeURIComponent(JSON.stringify(sort));
-      const { data } = await axios.get(
-          `/reddit/post?limit=${limit}&page=${pageParam}&sort=${sortParam}`,
-      );
+        return data.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
 
-      return data.data;
-  } catch (error) {
-      console.error(error);
-      throw error;
-  }
+export const getChannelPosts = async (channelId) => {
+    try {
+        const { data } = await axios.get(
+            `/reddit/channel/${channelId}/posts`,
+        );
+
+        return data.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };

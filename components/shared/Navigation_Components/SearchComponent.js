@@ -108,7 +108,7 @@ const SearchComponent = () => {
         data: searchResByAuthor,
         isLoading: isLoadingByAuthor,
         isError: isErrorByAuthor,
-    } = useQuery(['search', 'author', searchTerm], fetchPosts, {
+    } = useQuery(['search', 'author.name', searchTerm], fetchPosts, {
         enabled: !!searchTerm,
         onSuccess: (data) => {
             console.log('Data fetched successfully by author!', data);
@@ -377,14 +377,6 @@ const SearchResbyAuthor = ({
     );
 };
 
-const SearchPostELement = ({ post }) => {
-    return (
-        <Box>
-            <Typography variant="h5">{post.title}</Typography>
-            <Typography variant="p">{post.content}</Typography>
-        </Box>
-    );
-};
 
 const SearchCardByTitle = ({ post }) => {
     const theme = useTheme();

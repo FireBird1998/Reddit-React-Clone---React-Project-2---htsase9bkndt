@@ -40,6 +40,7 @@ import AvatarEl from "./AvatarEl";
 import MessageComponents from "./MessageComponents";
 import NotificationComponent from "./NotificationComponent";
 import SearchComponent from "./SearchComponent";
+import Logo from "./Logo";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -252,14 +253,7 @@ const TopBar = ({ themeSwitch }) => {
                 <MenuIcon />
               </IconButton>
             )}
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              reddit
-            </Typography>
+            <Logo />
           </Box>
           {/* this box will show the authouncitated menu */}
           {isUserAuthenticated() && (
