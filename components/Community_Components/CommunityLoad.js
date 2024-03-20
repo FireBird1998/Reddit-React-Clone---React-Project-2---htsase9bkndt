@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { getChannelPosts } from '@/app/action';
 import { LinearProgress, Stack, Typography } from '@mui/material';
+import PostEl from '../shared/Post_Components/PostEl';
 
 const CommunityLoad = ({ communityId }) => {
     const { data, isLoading, isError } = useQuery(
@@ -29,7 +30,7 @@ const CommunityLoad = ({ communityId }) => {
     return (
         <div>
             {data?.map((post) => (
-                <div key={post._id}>Post</div>
+                <PostEl key={post.id} post={post} />
             ))}
         </div>
     );
