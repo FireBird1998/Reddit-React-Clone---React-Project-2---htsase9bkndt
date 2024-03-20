@@ -44,6 +44,7 @@ export default function Home() {
                 {isUserAuthenticated() && (
                     <Grid item xs={false} lg={3}>
                         <RPremiumSideBar />
+                        <SideBarPopularCommunity />
                     </Grid>
                 )}
                 {!isUserAuthenticated() && (

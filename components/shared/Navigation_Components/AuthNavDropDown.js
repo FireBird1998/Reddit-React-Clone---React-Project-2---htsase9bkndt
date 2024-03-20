@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
+import SignpostIcon from '@mui/icons-material/Signpost';
 import { Divider, Typography, useMediaQuery } from "@mui/material";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -48,6 +48,8 @@ const AuthNavDropDown = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
+    const postRegex = /^\/r\/post\//;
+    const dynamicIdRegex = /^\/r\/[a-f0-9]{24}$/;
     if (pathname === sidebarLinks1[0].url) {
       const Icon1 = sidebarLinks1[0].icon;
       setIcon(<Icon1 />);
@@ -60,7 +62,13 @@ const AuthNavDropDown = () => {
       const Icon3 = otherLinks[0].icon;
       setIcon(<Icon3 />);
       setName(otherLinks[0].title);
-    } else {
+    } else if(dynamicIdRegex.test(pathname)){
+      setIcon(<SignpostIcon />);
+      setName("/r/community/...");
+    }else if(postRegex.test(pathname)){
+      setIcon(<SignpostIcon />);
+      setName("/r/post/...");
+    }else {
       setIcon(null);
       setName("Other");
     }
