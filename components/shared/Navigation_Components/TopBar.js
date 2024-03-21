@@ -122,6 +122,11 @@ const TopBar = ({ themeSwitch }) => {
         console.log('Logged out');
     };
 
+    const handleGoToProfile = () => {
+        router.push(`/profile/${authState.userInfo._id}`);
+        handleMenuClose();
+    };
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -145,7 +150,12 @@ const TopBar = ({ themeSwitch }) => {
                 },
             }}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleGoToProfile}>
+                <AvatarEl />
+                <Typography variant="p" sx={{ ml: 2 }}>
+                    Profile
+                </Typography>
+            </MenuItem>
             <Divider />
             <Typography
                 variant="div"
