@@ -18,11 +18,11 @@ const CreatePost = () => {
       container
       component="main"
       justifyContent="center"
-      alignItems="center"
+      alignItems="flex-start"
       bgcolor="transparent"
       direction={isSmallScreen ? 'column' : 'row'}
     >
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={7}>
         <CreatePostContextProvider>
           <CreatePostComponent />
         </CreatePostContextProvider>

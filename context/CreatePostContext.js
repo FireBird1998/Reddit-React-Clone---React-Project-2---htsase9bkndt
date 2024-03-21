@@ -15,6 +15,7 @@ export const CreatePostContextProvider = (props) => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [community, setCommunity] = useState("");
+    const [fileData, setFileData] = useState(null);
     const Router = useRouter();
 
     const mutation = useMutation(
@@ -25,8 +26,8 @@ export const CreatePostContextProvider = (props) => {
             // Append the title, content, and image to the form data
             formData.append('title', title);
             formData.append('content', content);
-            formData.append('channel', community._id);
-            formData.append('images', 'postImage'); // replace 'postImage' with the actual File or Blob object
+            formData.append('channel', community);
+            if(fileData) formData.append('images', fileData);
 
             // Send a POST request with the form data
             return axios.post('/reddit/post/', formData, {
@@ -44,6 +45,7 @@ export const CreatePostContextProvider = (props) => {
                 setIsSuccessful(true);
                 setSnackbarMessage('Post created successfully');
                 setSnackbarOpen(true);
+                setFileData(null);
                 setTimeout(() => {
                     Router.push('/');
                 }, 2000);
@@ -92,6 +94,8 @@ export const CreatePostContextProvider = (props) => {
                 setSnackbarOpen,
                 community,
                 setCommunity,
+                fileData,
+                setFileData,
             }}
         >
             {props.children}
