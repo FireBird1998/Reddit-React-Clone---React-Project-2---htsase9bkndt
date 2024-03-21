@@ -24,51 +24,20 @@ const darkMode = {
     palette: {
         mode: 'dark',
         primary: {
-            main: '#0c1416',
+            main: '#000000',
         },
         secondary: {
-            main: '#ff0004',
+            main: '#ff4500',
         },
         background: {
-            default: '#0C1416',
-            paper: '#0C1416',
+            default: '#000000',
+            paper: '#1a1d1f',
         },
         divider: 'rgba(133,133,133,0.69)',
         typography: {
             color: 'white',
         },
-        // overrides: {
-        //   MuiCssBaseline: {
-        //     '@global': {
-        //       '*::-webkit-scrollbar': {
-        //         width: '0.4em',
-        //       },
-        //       '*::-webkit-scrollbar-track': {
-        //         '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-        //       },
-        //       '*::-webkit-scrollbar-thumb': {
-        //         backgroundColor: 'rgba(0,0,0,.1)',
-        //         outline: '1px solid slategrey',
-        //       },
-        //       // Firefox
-        //       '*': {
-        //         scrollbarWidth: 'thin',
-        //         scrollbarColor: 'rgba(0,0,0,.1) transparent',
-        //       },
-        //       // Internet Explorer
-        //       '*::-ms-scrollbar': {
-        //         width: '0.4em',
-        //       },
-        //       '*::-ms-scrollbar-track': {
-        //         '-ms-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-        //       },
-        //       '*::-ms-scrollbar-thumb': {
-        //         backgroundColor: 'rgba(0,0,0,.1)',
-        //         outline: '1px solid slategrey',
-        //       },
-        //     },
-        //   },
-        // },
+        
     },
 };
 
@@ -79,7 +48,7 @@ const lightMode = {
             main: '#99999e',
         },
         secondary: {
-            main: '#ff0004',
+            main: '#ff4500',
         },
         background: {
             default: '#c6c9c9',
@@ -89,22 +58,6 @@ const lightMode = {
         typography: {
             color: 'black',
         },
-        // overrides: {
-        //   MuiCssBaseline: {
-        //     '@global': {
-        //       '*::-webkit-scrollbar': {
-        //         width: '0.4em',
-        //       },
-        //       '*::-webkit-scrollbar-track': {
-        //         '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-        //       },
-        //       '*::-webkit-scrollbar-thumb': {
-        //         backgroundColor: 'rgba(0,0,0,.1)',
-        //         outline: '1px solid slategrey',
-        //       },
-        //     },
-        //   },
-        // },
     },
 };
 

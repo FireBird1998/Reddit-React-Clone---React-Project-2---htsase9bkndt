@@ -1,17 +1,13 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Link as MuiLink } from '@mui/material';
 import Link from 'next/link';
+import Logo from '../shared/Navigation_Components/Logo';
 
 const AuthTopBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Reddit Clone
-        </Typography>
-        <MuiLink color="inherit" component={Link} href="/" underline="none">
-          Home
-        </MuiLink>
+        <Logo />
       </Toolbar>
     </AppBar>
   );

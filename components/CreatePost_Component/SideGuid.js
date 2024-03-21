@@ -7,7 +7,7 @@ import { AddBox } from "@mui/icons-material";
 
 const SideGuid = () => {
   return (
-    <Paper sx={{ p: 2, m: 2, borderRadius: 2 }}>
+    <Paper sx={{ p: 2, m: 2, borderRadius: 2, transition: "all 0.7s" }}>
       <Typography variant="h6">Posting Guidelines</Typography>
       <Divider sx={{ mt: 2, mb: 1 }} />
       {postingGuidelines.map((guideline, index) => (

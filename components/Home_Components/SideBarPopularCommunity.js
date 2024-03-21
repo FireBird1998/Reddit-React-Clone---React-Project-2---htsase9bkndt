@@ -134,7 +134,7 @@ const SideBarPopularCommunity = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "background.default",
+        backgroundColor: "background.paper",
         padding: "1rem",
         borderRadius: "10px",
         boxShadow: "0 0 10px rgba(0,0,0,0.5)",
@@ -143,7 +143,6 @@ const SideBarPopularCommunity = () => {
         maxHeight: isExpanded ? "calc(100vh - 100px)" : "390px",
         minWidth: "320px",
         color: theme.palette.typography.color,
-        backgroundColor: "rgba(0,0,0,0.5)",
         display: {
           xs: "none",
           sm: "none",

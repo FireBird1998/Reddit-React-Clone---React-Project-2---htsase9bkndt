@@ -22,7 +22,6 @@ import { useAuthRedirect } from '@/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const page = () => {
-    useAuthRedirect("/");
     const [comment, setComment] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -30,7 +29,7 @@ const page = () => {
     const { id } = useParams();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const { authState } = useContext(AuthContext);
+    const { authState, isUserAuthenticated } = useContext(AuthContext);
 
     const userID = authState?.userInfo?._id;
 
@@ -289,9 +288,11 @@ const page = () => {
         >
             <PostEl post={data} />
             <Divider />
-            <Paper elevation={3} sx={{ p: 2, my: 2 }}>
-                {createComment()}
-            </Paper>
+            {isUserAuthenticated() && (
+                <Paper elevation={3} sx={{ p: 2, my: 2 }}>
+                    {createComment()}
+                </Paper>
+            )}
             <Divider />
             <Paper elevation={3}>{commentEL()}</Paper>
             <Snackbar
