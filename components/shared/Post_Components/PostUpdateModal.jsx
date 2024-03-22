@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -9,14 +10,23 @@ import { useTheme } from '@mui/material/styles';
 import axios from '@/utility/axiosConfig';
 import { useMutation, useQueryClient } from 'react-query';
 import { useMediaQuery } from '@mui/material';
-
-
-
+import Image from 'next/image';
 
 const PostUpdateModal = ({ post, setSnackbarMessage, setSnackbarOpen }) => {
     const [open, setOpen] = React.useState(false);
     const [title, setTitle] = React.useState(post?.title || '');
     const [content, setContent] = React.useState(post?.content || '');
+    const [images, setImages] = React.useState(
+        post?.images.length > 0 ? post.images[0] : null,
+    );
+    React.useEffect(() => {
+        setTitle(post.title);
+        setContent(post.content);
+        setImages(post.images.length > 0 ? post.images[0] : null);
+    }, [post]);
+    const [newImages, setNewImages] = React.useState('');
+    const [inputKey, setInputKey] = React.useState(Date.now());
+    const [isRemoving, setIsRemoving] = React.useState(false);
     const theme = useTheme();
     const queryClient = useQueryClient();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -32,6 +42,19 @@ const PostUpdateModal = ({ post, setSnackbarMessage, setSnackbarOpen }) => {
         p: 4,
     };
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setNewImages(file);
+    };
+    const removeNewImage = () => {
+        setNewImages(null);
+        setInputKey(Date.now()); // Reset the file input field
+    };
+    const removeOldImage = () => {
+        setImages(null);
+        setIsRemoving(true);
+    };
+
     const mutatePost = useMutation(
         async () => {
             console.log('patching post');
@@ -42,12 +65,21 @@ const PostUpdateModal = ({ post, setSnackbarMessage, setSnackbarOpen }) => {
             // images.forEach((image, index) => {
             //     formData.append(`images[${index}]`, image);
             // });
+            if (newImages) {
+                formData.append('images', newImages);
+            } else if (isRemoving) {
+                formData.append('images', []);
+            }
 
-            const response = await axios.patch(`/reddit/post/${post._id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
+            const response = await axios.patch(
+                `/reddit/post/${post._id}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 },
-            });
+            );
             return response.data;
         },
         {
@@ -56,9 +88,12 @@ const PostUpdateModal = ({ post, setSnackbarMessage, setSnackbarOpen }) => {
                 queryClient.invalidateQueries('post');
                 setSnackbarMessage('Post updated successfully');
                 setSnackbarOpen(true);
-                setTimeout(() => {
-                    handleClose();
-                }, 500);
+                setNewImages(null);
+                setInputKey(Date.now());
+                setImages(null);
+                setIsRemoving(false);
+                handleClose();
+                
             },
             onError: (error) => {
                 console.log(error);
@@ -143,16 +178,102 @@ const PostUpdateModal = ({ post, setSnackbarMessage, setSnackbarOpen }) => {
                                 },
                         }}
                     />
-                    <Button
-                        variant="filled"
+                    <Box
                         sx={{
-                            bgcolor: theme.palette.secondary.main,
-                            color: theme.palette.typography,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            gap: '10px',
                         }}
-                        onClick={() => handlePost()}
                     >
-                        Update Post
-                    </Button>
+                        <TextField
+                            key={inputKey}
+                            type="file"
+                            onChange={handleFileChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            sx={{
+                                width: '100%',
+                            }}
+                        />
+
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            {images && (
+                                <div>
+                                    <Typography>Old Image</Typography>
+                                    <Image
+                                        src={images}
+                                        width={150}
+                                        height={150}
+                                        alt="post image"
+                                    />
+                                </div>
+                            )}
+                            {newImages && (
+                                <div>
+                                    <Typography>New Image</Typography>
+                                    <Image
+                                        src={URL.createObjectURL(newImages)}
+                                        width={150}
+                                        height={150}
+                                        alt="new post image"
+                                    />
+                                </div>
+                            )}
+                        </Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            gap: '10px',
+                            mt: 2,
+                        }}
+                    >
+                        <Button
+                            variant="filled"
+                            sx={{
+                                bgcolor: theme.palette.secondary.main,
+                                color: theme.palette.typography,
+                            }}
+                            onClick={() => handlePost()}
+                        >
+                            Update Post
+                        </Button>
+                        {images && !newImages && (
+                            <Button
+                                onClick={() => removeOldImage()}
+                                variant="filled"
+                                sx={{
+                                    bgcolor: theme.palette.primary.main,
+                                    color: theme.palette.secondary.main,
+                                }}
+                            >
+                                Remove Old Image
+                            </Button>
+                        )}
+                        {newImages && (
+                            <Button
+                                onClick={() => removeNewImage()}
+                                variant="filled"
+                                sx={{
+                                    bgcolor: theme.palette.primary.main,
+                                    color: theme.palette.secondary.main,
+                                }}
+                            >
+                                Remove New Image
+                            </Button>
+                        )}
+                    </Box>
                 </Box>
             </Modal>
         </div>

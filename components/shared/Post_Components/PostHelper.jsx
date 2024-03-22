@@ -207,6 +207,7 @@ const PostHelper = ({ post }) => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     gap: 1,
+                    backgroundColor: theme.palette.primary.main,
                 }}
             >
                 <IconButton
@@ -267,6 +268,7 @@ const PostHelper = ({ post }) => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: 1,
+                        backgroundColor: theme.palette.primary.main,
                     }}
                 >
                     <IconButton 
