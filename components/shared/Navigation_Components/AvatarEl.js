@@ -15,30 +15,30 @@ const AvatarEl = () => {
         <Avatar
             sx={{
                 bgcolor: deepOrange[500],
-                width: matches ? 20 : 30,
-                height: matches ? 20 : 30,
+                width: matches ? 30 : 40,
+                height: matches ? 30 : 40,
             }}
         >
             <Image
                 src={Gif}
                 alt="Profile Icon"
-                width={matches ? 20 : 30}
-                height={matches ? 20 : 30}
+                width={matches ? 30 : 40}
+                height={matches ? 30 : 40}
             />
         </Avatar>
     ) : (
         <Avatar
             sx={{
                 bgcolor: deepOrange[500],
-                width: matches ? 20 : 30,
-                height: matches ? 20 : 30,
+                width: matches ? 30 : 40,
+                height: matches ? 30 : 40,
             }}
         >
             <Image
                 src={ProfileIcon}
                 alt="Profile Icon"
-                width={matches ? 20 : 30}
-                height={matches ? 20 : 30}
+                width={matches ? 30 : 40}
+                height={matches ? 30 : 40}
             />
         </Avatar>
     );
