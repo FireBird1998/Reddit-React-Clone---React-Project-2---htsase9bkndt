@@ -8,6 +8,7 @@ import {
     DialogContent,
     DialogActions,
     TextField,
+    Divider,
 } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import Image from 'next/image';
@@ -33,6 +34,7 @@ function ImageUploadDialog() {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Upload Image</DialogTitle>
+                <Divider />
                 <DialogContent>
                     <TextField
                         type="file"
@@ -51,6 +53,7 @@ function ImageUploadDialog() {
                             />
                             <br />
                             <Button
+                                variant="contained"
                                 sx={{ mt: 2 }}
                                 onClick={() => setFileData(null)}
                             >
@@ -60,7 +63,7 @@ function ImageUploadDialog() {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button variant='contained' onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>
         </div>

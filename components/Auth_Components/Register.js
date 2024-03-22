@@ -56,9 +56,7 @@ export default function Register() {
         console.log(data);
         setSnackbarMessage("User registered successfully");
         setSnackbarOpen(true);
-        setTimeout(() => {
-          router.push("/signIn");
-        }, 3000);
+        router.push("/signIn");
       },
       onError: (error) => {
         console.error(error);

@@ -57,17 +57,11 @@ export default function SignIn() {
           console.log(data);
           setSnackbarMessage('User logged in successfully');
           setSnackbarOpen(true);
-        //   console.log(data.data.token);
-        //   console.log(data.data.data);
           setAuthState({
             token: data.data.token,
             data: data.data.data
         });
-
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
-          // handle successful login here
+          router.push("/");
         },
         onError: (error) => {
           console.error(error);

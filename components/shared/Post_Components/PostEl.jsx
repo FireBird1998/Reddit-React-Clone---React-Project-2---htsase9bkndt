@@ -28,6 +28,7 @@ import Image from 'next/image';
 import { useMutation } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { AuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const PostEl = ({ post }) => {
     const theme = useTheme();
@@ -47,7 +48,12 @@ const PostEl = ({ post }) => {
                 }}
             >
                 <CardHeader
-                    avatar={<AvatarEl user={post.author?.profileImage} />}
+                    avatar={
+                        <AvatarEl
+                            user={post.author?.profileImage}
+                            author={post.author}
+                        />
+                    }
                     title={post.author.name}
                     subheader={post.channel?.name}
                 />
@@ -55,7 +61,10 @@ const PostEl = ({ post }) => {
                 {isUserAuthenticated() && (
                     <CardActions>
                         {authState?.userInfo?._id !== post.author._id && (
-                            <IconButtonWithPopper userId={post.author._id} name={post.author.name} />
+                            <IconButtonWithPopper
+                                userId={post.author._id}
+                                name={post.author.name}
+                            />
                         )}
                     </CardActions>
                 )}
@@ -85,7 +94,7 @@ const PostEl = ({ post }) => {
     );
 };
 
-const IconButtonWithPopper = ({ userId , name }) => {
+const IconButtonWithPopper = ({ userId, name }) => {
     const [isFollowed, setIsFollowed] = useState(false);
     const [message, setMessage] = useState('');
     const followMutation = useMutation(
@@ -188,19 +197,29 @@ const IconButtonWithPopper = ({ userId , name }) => {
     );
 };
 
-const AvatarEl = ({ user }) => {
+const AvatarEl = ({ user, author }) => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
     const avatarSize = isSmallScreen ? 35 : 40; // You can adjust these values as needed
+    const router = useRouter();
+    const { authState } = useContext(AuthContext);
+    const handleAvatarClick = () => {
+        if (author._id === authState?.userInfo?._id) {
+            router.push(`/profile/${author._id}`);
+        } else {
+            router.push(`/u/${author._id}`);
+        }
+    };
 
     if (user === null) {
         return (
             <Avatar
+                onClick={handleAvatarClick}
                 sx={{
                     width: avatarSize,
                     height: avatarSize,
                     bgcolor: theme.palette.secondary.main,
+                    cursor: 'pointer',
                 }}
             >
                 <Image
@@ -212,7 +231,13 @@ const AvatarEl = ({ user }) => {
             </Avatar>
         );
     }
-    return <Avatar src={user} sx={{ width: avatarSize, height: avatarSize }} />;
+    return (
+        <Avatar
+            src={user}
+            sx={{ width: avatarSize, height: avatarSize, cursor: 'pointer' }}
+            onClick={handleAvatarClick}
+        />
+    );
 };
 
 export default PostEl;

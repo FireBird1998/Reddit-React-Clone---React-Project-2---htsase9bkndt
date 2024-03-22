@@ -35,7 +35,7 @@ const AvatarEl = () => {
             }}
         >
             <Image
-                src={ProfileIcon}
+                src={authState.userInfo?.profileImage !== null ? authState.userInfo?.profileImage : ProfileIcon}
                 alt="Profile Icon"
                 width={matches ? 30 : 40}
                 height={matches ? 30 : 40}
