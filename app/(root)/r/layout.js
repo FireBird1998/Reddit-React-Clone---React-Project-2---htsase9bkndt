@@ -8,7 +8,9 @@ const Layout = ({ children }) => {
   return (
     <Grid container component="main" spacing={1} sx={{
       backgroundColor: theme.palette.background.default,
-    }}>
+    }}
+    justifyContent={useMediaQuery(theme.breakpoints.up('md')) ? 'center' : 'flex-start'}
+    >
       {children}
     </Grid>
   );

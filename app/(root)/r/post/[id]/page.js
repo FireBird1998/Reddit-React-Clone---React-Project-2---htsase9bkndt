@@ -282,6 +282,8 @@ const page = () => {
         <Grid
             item
             xs={12}
+            lg={8}
+            xl={6}
             sx={{
                 width: '100%',
             }}
