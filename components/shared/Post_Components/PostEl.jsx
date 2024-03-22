@@ -29,10 +29,13 @@ import { useMutation } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import moment from 'moment';
 
 const PostEl = ({ post }) => {
     const theme = useTheme();
     const { isUserAuthenticated, authState } = useContext(AuthContext);
+    const createdAt = moment(post.createdAt).fromNow();
+
     return (
         <Card
             sx={{
@@ -58,16 +61,29 @@ const PostEl = ({ post }) => {
                     subheader={post.channel?.name}
                 />
 
-                {isUserAuthenticated() && (
-                    <CardActions>
-                        {authState?.userInfo?._id !== post.author._id && (
-                            <IconButtonWithPopper
-                                userId={post.author._id}
-                                name={post.author.name}
-                            />
-                        )}
-                    </CardActions>
-                )}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                        alignItems: 'center',
+                        
+                    }}
+                >
+                    
+                    {isUserAuthenticated() && (
+                        <CardActions>
+                            {authState?.userInfo?._id !== post.author._id && (
+                                <IconButtonWithPopper
+                                    userId={post.author._id}
+                                    name={post.author.name}
+                                />
+                            )}
+                        </CardActions>
+                    )}
+                    <Typography variant="caption" color="textSecondary">
+                        {createdAt}
+                    </Typography>
+                </Box>
             </Box>
             <Divider />
             <CardContent>
@@ -202,12 +218,18 @@ const AvatarEl = ({ user, author }) => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const avatarSize = isSmallScreen ? 35 : 40; // You can adjust these values as needed
     const router = useRouter();
-    const { authState } = useContext(AuthContext);
+    const { authState, isUserAuthenticated } = useContext(AuthContext);
+    const [message, setMessage] = useState('');
     const handleAvatarClick = () => {
-        if (author._id === authState?.userInfo?._id) {
-            router.push(`/profile/${author._id}`);
+        if (isUserAuthenticated()) {
+            if (author._id === authState?.userInfo?._id) {
+                router.push(`/profile/${author._id}`);
+            } else {
+                router.push(`/u/${author._id}`);
+            }
         } else {
-            router.push(`/u/${author._id}`);
+            setMessage('Please login to view profile');
+            router.push('/signIn');
         }
     };
 
@@ -228,15 +250,23 @@ const AvatarEl = ({ user, author }) => {
                     width={avatarSize}
                     height={avatarSize}
                 />
+                <SnackbarEL message={message} setMessage={setMessage} />
             </Avatar>
         );
     }
     return (
-        <Avatar
-            src={user}
-            sx={{ width: avatarSize, height: avatarSize, cursor: 'pointer' }}
-            onClick={handleAvatarClick}
-        />
+        <>
+            <Avatar
+                src={user}
+                sx={{
+                    width: avatarSize,
+                    height: avatarSize,
+                    cursor: 'pointer',
+                }}
+                onClick={handleAvatarClick}
+            />
+            <SnackbarEL message={message} setMessage={setMessage} />
+        </>
     );
 };
 
