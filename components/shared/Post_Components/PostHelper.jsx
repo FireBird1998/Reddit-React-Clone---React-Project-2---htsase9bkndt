@@ -45,9 +45,8 @@ const PostHelper = ({ post }) => {
         if (response.status !== 204) {
             console.error('Post not deleted');
             throw new Error('Post not deleted');
-
         }
-    
+
         return response.data;
     };
 
@@ -57,9 +56,8 @@ const PostHelper = ({ post }) => {
         } else {
             setSnackbarMessage('Please login to upvote');
             setSnackbarOpen(true);
-            setTimeout(() => {
-                Router.push('/signIn');
-            }, 2000);
+
+            Router.push('/signIn');
         }
     };
 
@@ -69,9 +67,8 @@ const PostHelper = ({ post }) => {
         } else {
             setSnackbarMessage('Please login to downvote');
             setSnackbarOpen(true);
-            setTimeout(() => {
-                Router.push('/signIn');
-            }, 2000);
+
+            Router.push('/signIn');
         }
     };
 
@@ -81,9 +78,8 @@ const PostHelper = ({ post }) => {
         } else {
             setSnackbarMessage('Please login to comment');
             setSnackbarOpen(true);
-            setTimeout(() => {
-                Router.push('/signIn');
-            }, 2000);
+
+            Router.push('/signIn');
         }
     };
 
@@ -93,9 +89,8 @@ const PostHelper = ({ post }) => {
         } else {
             setSnackbarMessage('Please login to delete post');
             setSnackbarOpen(true);
-            setTimeout(() => {
-                Router.push('/signIn');
-            }, 2000);
+
+            Router.push('/signIn');
         }
     };
 
@@ -162,24 +157,20 @@ const PostHelper = ({ post }) => {
         },
     );
 
-    const deletePost = useMutation(
-        deletePostRequest,
-        {
-            onSuccess: (data) => {
-                console.log('Post deleted');
-                queryClient.invalidateQueries('posts');
-                setSnackbarMessage('Post deleted successfully');
-                setSnackbarOpen(true);
-            },
-            onError: (error) => {
-                console.error('Error deleting post:', error);
-                setSnackbarMessage(error.response.data.message);
-                setSnackbarOpen(true);
-            },
-            onSettled: () => {
-            },
+    const deletePost = useMutation(deletePostRequest, {
+        onSuccess: (data) => {
+            console.log('Post deleted');
+            queryClient.invalidateQueries('posts');
+            setSnackbarMessage('Post deleted successfully');
+            setSnackbarOpen(true);
         },
-    );
+        onError: (error) => {
+            console.error('Error deleting post:', error);
+            setSnackbarMessage(error.response.data.message);
+            setSnackbarOpen(true);
+        },
+        onSettled: () => {},
+    });
 
     const { data, error, isError } = useQuery(
         ['likeCount', post._id],
@@ -271,7 +262,7 @@ const PostHelper = ({ post }) => {
                         backgroundColor: theme.palette.primary.main,
                     }}
                 >
-                    <IconButton 
+                    <IconButton
                         sx={{
                             color: theme.palette.text.primary,
                             '&:hover': {
@@ -283,7 +274,11 @@ const PostHelper = ({ post }) => {
                     >
                         <DeleteForever />
                     </IconButton>
-                    <PostUpdateModal post={post} setSnackbarMessage={setSnackbarMessage} setSnackbarOpen={setSnackbarOpen} />
+                    <PostUpdateModal
+                        post={post}
+                        setSnackbarMessage={setSnackbarMessage}
+                        setSnackbarOpen={setSnackbarOpen}
+                    />
                 </Paper>
             );
         }
@@ -295,10 +290,12 @@ const PostHelper = ({ post }) => {
 
     return (
         <CardActions disableSpacing>
-            <Box sx={{
-                display: 'flex',
-                gap: 1,
-            }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: 1,
+                }}
+            >
                 {upvoteDownvote()}
                 {userSpecificELements()}
             </Box>

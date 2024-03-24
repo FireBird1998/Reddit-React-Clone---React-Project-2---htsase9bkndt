@@ -57,6 +57,7 @@ const AuthNavDropDown = () => {
         const postRegex = /^\/r\/post\//;
         const dynamicIdRegex = /^\/r\/[a-f0-9]{24}$/;
         const profileRegex = /^\/profile\/[a-f0-9]{24}$/;
+        const userRegex = /^\/u\/[a-zA-Z0-9]+$/;
         if (pathname === sidebarLinks1[0].url) {
             const Icon1 = sidebarLinks1[0].icon;
             setIcon(<Icon1 />);
@@ -78,7 +79,10 @@ const AuthNavDropDown = () => {
         } else if (profileRegex.test(pathname)) {
             setIcon(<RedditIcon />); 
             setName(`${authState.userInfo.name}'s Profile`);  
-        } else {
+        } else if(userRegex.test(pathname)){
+            setIcon(<RedditIcon />);
+            setName('User Profile');
+        }else {
             setIcon(null);
             setName('Other');
         }

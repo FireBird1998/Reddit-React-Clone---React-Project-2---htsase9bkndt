@@ -66,10 +66,8 @@ const PostEl = ({ post }) => {
                         display: 'flex',
                         flexDirection: 'row-reverse',
                         alignItems: 'center',
-                        
                     }}
                 >
-                    
                     {isUserAuthenticated() && (
                         <CardActions>
                             {authState?.userInfo?._id !== post.author._id && (
@@ -80,7 +78,13 @@ const PostEl = ({ post }) => {
                             )}
                         </CardActions>
                     )}
-                    <Typography variant="caption" color="textSecondary">
+                    <Typography
+                        variant="caption"
+                        color="textSecondary"
+                        sx={{
+                            marginRight: isUserAuthenticated() ? '0' : '10px',
+                        }}
+                    >
                         {createdAt}
                     </Typography>
                 </Box>

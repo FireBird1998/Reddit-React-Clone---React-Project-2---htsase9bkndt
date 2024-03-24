@@ -1,8 +1,11 @@
+'use client'; 
 import React from 'react'
+import { useParams } from 'next/navigation';
 
 const User = () => {
+  const { user } = useParams()
   return (
-    <div>User</div>
+    <div>User {user}</div>
   )
 }
 

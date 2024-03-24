@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 const AuthContext = React.createContext();
 const { Provider } = AuthContext;
 
@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
         userInfo: null,
     });
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         console.log(authState);
@@ -44,6 +45,7 @@ const AuthProvider = ({ children }) => {
             userInfo: null,
         });
         setIsAuthenticated(false);
+        router.push('/');
     };
 
     useEffect(() => {

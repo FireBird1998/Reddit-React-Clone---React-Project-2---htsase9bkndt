@@ -14,7 +14,7 @@ export const CreatePostContextProvider = (props) => {
     const [isSuccessful, setIsSuccessful] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [community, setCommunity] = useState("");
+    const [community, setCommunity] = useState('');
     const [fileData, setFileData] = useState(null);
     const Router = useRouter();
 
@@ -27,7 +27,7 @@ export const CreatePostContextProvider = (props) => {
             formData.append('title', title);
             formData.append('content', content);
             formData.append('channel', community);
-            if(fileData) formData.append('images', fileData);
+            if (fileData) formData.append('images', fileData);
 
             // Send a POST request with the form data
             return axios.post('/reddit/post/', formData, {
@@ -46,9 +46,7 @@ export const CreatePostContextProvider = (props) => {
                 setSnackbarMessage('Post created successfully');
                 setSnackbarOpen(true);
                 setFileData(null);
-                setTimeout(() => {
-                    Router.push('/');
-                }, 2000);
+                Router.push('/');
             },
             onError: (error) => {
                 // Handle the error case
@@ -67,10 +65,6 @@ export const CreatePostContextProvider = (props) => {
             },
         },
     );
-    // useEffect(() => {
-    //     console.log("Title: ", title);
-    //     console.log("Content: ", content);
-    // }, [title, content]);
     const handlePost = () => {
         if (title.trim() === '' || JSON.stringify(content).trim() === '') {
             setSnackbarMessage('Title or content is empty');
