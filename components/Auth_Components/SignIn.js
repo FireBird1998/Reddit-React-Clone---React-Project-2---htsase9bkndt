@@ -54,7 +54,6 @@ export default function SignIn() {
   
       mutation.mutate(user, {
         onSuccess: (data) => {
-          console.log(data);
           setSnackbarMessage('User logged in successfully');
           setSnackbarOpen(true);
           setAuthState({

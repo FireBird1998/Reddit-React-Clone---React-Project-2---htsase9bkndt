@@ -85,6 +85,8 @@ const CreatePostComponent = () => {
                                 borderColor: theme.palette.secondary.main,
                             },
                     }}
+                    autoFocus
+                    autoComplete='off'
                 />
                 <TextField
                     id="outlined-textarea"
