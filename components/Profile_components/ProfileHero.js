@@ -41,7 +41,7 @@ const TopBanner = ({ user }) => {
                 <CardMedia
                     component="img"
                     height="200"
-                    image={user.data.profileImage}
+                    image={user.data.profileImage ? user.data.profileImage : 'https://source.unsplash.com/2000x2000/?nature'}
                     alt="green iguana"
                     sx={{
                         width: 200,

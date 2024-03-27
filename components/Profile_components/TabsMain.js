@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useTheme } from '@emotion/react';
 
+
 const TabsMain = () => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
@@ -16,11 +17,11 @@ const TabsMain = () => {
     const tabStyle = {
         borderRadius: '25px',
         '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.primary.light,
         },
         '&.Mui-selected': {
-            backgroundColor: 'rgba(0,0,0,0.5)',
             color: theme.palette.secondary.main,
+            textShadow: `0 0 10px ${theme.palette.secondary.main}, 0 0 20px ${theme.palette.secondary.main}, 0 0 30px ${theme.palette.secondary.main}, 0 0 40px ${theme.palette.secondary.main}`,
         },
     };
 
@@ -31,7 +32,7 @@ const TabsMain = () => {
                     sx={{
                         borderBottom: 1,
                         borderColor: 'divider',
-                        minWidth: '100%'
+                        minWidth: '100%',
                     }}
                 >
                     <TabList
@@ -45,7 +46,6 @@ const TabsMain = () => {
                                 backgroundColor: theme.palette.secondary.main,
                             },
                         }}
-                        
                     >
                         <Tab label="Overview" value="1" sx={tabStyle} />
                         <Tab label="Posts" value="2" sx={tabStyle} />
