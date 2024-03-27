@@ -13,14 +13,12 @@ import {
     CardContent,
     Typography,
 } from '@mui/material';
-import SnackbarEL from '../shared/Notification_Components/SnachBarEL';
-import TabsMain from './TabsMain';
 
 const ProfileHero = ({ user }) => {
     return (
         <Box>
             <TopBanner user={user} />
-            <TabsMain />
+            
         </Box>
     );
 };

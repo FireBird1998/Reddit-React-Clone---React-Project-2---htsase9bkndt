@@ -5,9 +5,15 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useTheme } from '@emotion/react';
+import OverView from './OverView';
+import Posts from './Posts';
+import Comments from './Comments';
+import Saved from './Saved';
+import UpVoted from './UpVoted';
+import DownVoted from './DownVoted';
 
 
-const TabsMain = () => {
+const TabsMain = ({user}) => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
     const handleChange = (event, newValue) => {
@@ -55,9 +61,12 @@ const TabsMain = () => {
                         <Tab label="Downvoted" value="6" sx={tabStyle} />
                     </TabList>
                 </Box>
-                <TabPanel value="1">Item One</TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
+                <TabPanel value="1"><OverView/></TabPanel>
+                <TabPanel value="2"><Posts/></TabPanel>
+                <TabPanel value="3"><Comments/></TabPanel>
+                <TabPanel value="4"><Saved/></TabPanel>
+                <TabPanel value="5"><UpVoted/></TabPanel>
+                <TabPanel value="6"><DownVoted/></TabPanel>
             </TabContext>
         </Box>
     );

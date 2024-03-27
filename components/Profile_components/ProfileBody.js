@@ -1,8 +1,8 @@
 import React from 'react'
-
-const ProfileBody = () => {
+import TabsMain from './TabsMain'
+const ProfileBody = ({user}) => {
   return (
-    <div>ProfileBody</div>
+      <TabsMain user={user} />
   )
 }
 

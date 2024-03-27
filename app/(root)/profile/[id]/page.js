@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { Box, Grid } from '@mui/material';
 import ProfileHero from '@/components/Profile_components/ProfileHero';
 import ProfileSideBar from '@/components/Profile_components/ProfileSideBar';
+import ProfileBody from '@/components/Profile_components/ProfileBody';
 import { useAuthRedirect } from '@/hooks';
 import { useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
@@ -38,6 +39,7 @@ const page = () => {
         <Grid container spacing={2}>
             <Grid item xs={12} md={9}>
                 <ProfileHero user={userData} />
+                <ProfileBody user={userData} />
             </Grid>
             <Grid item xs={0} md={3} >
                 <ProfileSideBar user={userData} />
