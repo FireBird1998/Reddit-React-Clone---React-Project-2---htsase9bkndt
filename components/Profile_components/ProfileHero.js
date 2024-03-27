@@ -14,97 +14,51 @@ import {
     Typography,
 } from '@mui/material';
 import SnackbarEL from '../shared/Notification_Components/SnachBarEL';
+import TabsMain from './TabsMain';
 
-const ProfileHero = () => {
-    const { authState } = useContext(AuthContext);
-    const { data, isLoading, isError, error } = useQuery(
-        'userData',
-        () => authState.userInfo,
-    );
-    
-    if (isLoading) {
-        return <Box>Loading...</Box>;
-    }
-
+const ProfileHero = ({ user }) => {
     return (
         <Box>
-            <Banner data={authState.userInfo} />
+            <TopBanner user={user} />
+            <TabsMain />
         </Box>
     );
 };
 
-const Banner = ({ data }) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-    const [message, setMessage] = useState('');
-
-    const avatarSize = isMobile ? '50px' : isTablet ? '75px' : '100px';
-    const avatarPosition = isMobile ? '-10px' : isTablet ? '-20px' : '-25px';
-    const imageHeight = isMobile ? '150' : isTablet ? '200' : '250';
-
-    const image = `https://source.unsplash.com/2000x${imageHeight}/`;
-
+const TopBanner = ({ user }) => {
     return (
         <Paper
-            elevation={3}
             sx={{
-                position: 'relative',
+                backgroundColor: 'primary.main',
+                padding: 2,
             }}
         >
-            <Card>
-                {image && (
-                    <CardMedia
-                        component="img"
-                        height={imageHeight}
-                        image={image}
-                        alt="Community Hero"
-                    />
-                )}
-                <Box
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'flex-end',
+            
+            }}>
+                <CardMedia
+                    component="img"
+                    height="200"
+                    image={user.data.profileImage}
+                    alt="green iguana"
                     sx={{
-                        position: 'relative',
-                        display: 'flex',
-                        alignItems: 'center',
-                        paddingLeft: avatarSize,
-                        paddingTop: avatarPosition,
+                        width: 200,
+                        objectFit: 'cover',
+                        borderRadius: '25px',
                     }}
-                >
-                    <Avatar
-                        sx={{
-                            position: 'absolute',
-                            top: avatarPosition,
-                            left: '50px',
-                            width: avatarSize,
-                            height: avatarSize,
-                            border: '2px solid white',
-                            zIndex: 1,
-                        }}
-                    >
-                        {data.name.charAt(0).toUpperCase()}
-                    </Avatar>
-                    <CardContent
-                        sx={{
-                            ml: 7,
-                            display: 'flex',
-                            gap: isMobile ? '1rem' : '3rem',
-                        }}
-                    >
-                        <Box>
-                            <Typography variant="h5" color="textPrimary">
-                                {data.name}
-                            </Typography>
-                            <Typography
-                                variant="subtitle1"
-                                color="textSecondary"
-                            >
-                                {data.email}
-                            </Typography>
-                        </Box>
-                    </CardContent>
-                </Box>
-            </Card>
-            <SnackbarEL message={message} setMessage={setMessage} />
+                />
+                <CardContent>
+                    <Typography variant="h5" component="div">
+                        {user.data.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {user.data.email}
+                    </Typography>
+                </CardContent>
+                
+            </Box>
         </Paper>
     );
 };

@@ -32,7 +32,7 @@ const fetchUserPostData = async (name) => {
 
 const ProfileSideBar = ({ user }) => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const createdAt = moment(user.data.createdAt).format('MMM D, YYYY');
     const [image, setImage] = useState(
         'https://source.unsplash.com/2000x2000/?nature',
@@ -56,6 +56,7 @@ const ProfileSideBar = ({ user }) => {
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.primary.contrastText,
                 position: 'relative',
+                display: isMobile ? 'none' : 'block',
             }}
         >
             <Fab
