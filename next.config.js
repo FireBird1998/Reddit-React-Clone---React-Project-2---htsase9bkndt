@@ -4,7 +4,7 @@ const config = {
     serverActions: true,
   },
   images: {
-    domains: ['newton-project-resume-backend.s3.ap-south-1.amazonaws.com', 'images.unsplash.com'],
+    domains: ['newton-project-resume-backend.s3.ap-south-1.amazonaws.com', 'images.unsplash.com', 'source.unsplash.com'],
   },
 };
 
