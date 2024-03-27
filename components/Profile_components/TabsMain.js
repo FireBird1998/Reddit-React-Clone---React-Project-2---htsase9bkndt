@@ -4,7 +4,10 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import Slide from '@mui/material/Slide';
+import Grow from '@mui/material/Grow';
 import { useTheme } from '@emotion/react';
+
 import OverView from './OverView';
 import Posts from './Posts';
 import Comments from './Comments';
@@ -12,15 +15,23 @@ import Saved from './Saved';
 import UpVoted from './UpVoted';
 import DownVoted from './DownVoted';
 
-
-const TabsMain = ({user}) => {
+const TabsMain = ({ user }) => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const [prevValue, setPrevValue] = React.useState(value);
+
+    React.useEffect(() => {
+        setPrevValue(value);
+    }, [value]);
+
+    const direction = prevValue < value ? 'left' : 'right';
+
     const tabStyle = {
+        fontSize: '0.75rem',
         borderRadius: '25px',
         '&:hover': {
             backgroundColor: theme.palette.primary.light,
@@ -32,12 +43,19 @@ const TabsMain = ({user}) => {
     };
 
     return (
-        <Box sx={{ width: '100%', typography: 'body1', mt: 1, pb: 1 }}>
+        <Box
+            className="tab-container"
+            sx={{
+                width: '100%',
+                typography: 'body1',
+                mt: 1,
+                pb: 1,
+                overflow: 'hidden',
+            }}
+        >
             <TabContext value={value}>
                 <Box
                     sx={{
-                        borderBottom: 1,
-                        borderColor: 'divider',
                         minWidth: '100%',
                     }}
                 >
@@ -61,12 +79,66 @@ const TabsMain = ({user}) => {
                         <Tab label="Downvoted" value="6" sx={tabStyle} />
                     </TabList>
                 </Box>
-                <TabPanel value="1"><OverView/></TabPanel>
-                <TabPanel value="2"><Posts/></TabPanel>
-                <TabPanel value="3"><Comments/></TabPanel>
-                <TabPanel value="4"><Saved/></TabPanel>
-                <TabPanel value="5"><UpVoted/></TabPanel>
-                <TabPanel value="6"><DownVoted/></TabPanel>
+                <Slide
+                    direction={direction}
+                    in={value === '1'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="1" sx={{ m: 0, p: 0 }}>
+                        <OverView />
+                    </TabPanel>
+                </Slide>
+                <Slide
+                    direction={direction}
+                    in={value === '2'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="2">
+                        <Posts />
+                    </TabPanel>
+                </Slide>
+                <Slide
+                    direction={direction}
+                    in={value === '3'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="3">
+                        <Comments />
+                    </TabPanel>
+                </Slide>
+                <Slide
+                    direction={direction}
+                    in={value === '4'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="4">
+                        <Saved />
+                    </TabPanel>
+                </Slide>
+                <Slide
+                    direction={direction}
+                    in={value === '5'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="5">
+                        <UpVoted />
+                    </TabPanel>
+                </Slide>
+                <Slide
+                    direction={direction}
+                    in={value === '6'}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <TabPanel value="6">
+                        <DownVoted />
+                    </TabPanel>
+                </Slide>
             </TabContext>
         </Box>
     );

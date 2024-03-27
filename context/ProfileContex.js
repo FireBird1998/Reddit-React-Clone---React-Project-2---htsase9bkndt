@@ -1,22 +1,16 @@
 import React, { createContext, useState } from 'react';
 
-
 export const ProfileContext = createContext();
 
-t
 export const ProfileProvider = ({ children }) => {
-    // State for profile data
-    const [profile, setProfile] = useState(null);
+    const [activeButton, setActiveButton] = useState(null);
 
-    // Function to update the profile data
-    const updateProfile = (newProfile) => {
-        setProfile(newProfile);
+    const toggleButton = (buttonName) => {
+        setActiveButton(activeButton === buttonName ? null : buttonName);
     };
-
-    // Value object for the context
     const contextValue = {
-        profile,
-        updateProfile,
+        activeButton,
+        toggleButton,
     };
 
     // Return the provider with the context value
