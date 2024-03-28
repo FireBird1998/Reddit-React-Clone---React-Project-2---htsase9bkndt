@@ -49,7 +49,6 @@ const TabsMain = ({ user }) => {
                 width: '100%',
                 typography: 'body1',
                 mt: 1,
-                pb: 1,
                 overflow: 'hidden',
             }}
         >

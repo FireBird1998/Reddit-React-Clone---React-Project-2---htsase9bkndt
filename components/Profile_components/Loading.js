@@ -98,7 +98,7 @@ const Loading = ({ filter }) => {
             {data.pages.map((group, i) => (
                 <React.Fragment key={i}>
                     {group.map((post) => (
-                        <PostEl key={post.id} post={post} />
+                        <PostEl key={post._id} post={post} />
                     ))}
                 </React.Fragment>
             ))}
