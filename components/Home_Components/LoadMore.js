@@ -21,13 +21,21 @@ const LoadMore = () => {
     const fetchPosts = ({ pageParam = 1 }) => {
         switch (activeButton) {
             case 'Best':
-                return getPostsFilter(pageParam, 10, '{"$expr":{"$gt":["$likeCount","$dislikeCount"]}}');
+                return getPostsFilter(
+                    pageParam,
+                    10,
+                    '{"$expr":{"$gt":["$likeCount","$dislikeCount"]}}',
+                );
             case 'Hot':
-                return getPostsFilter(pageParam, 10, '{"$expr":{"$eq":["$likeCount","$dislikeCount"]}}');
+                return getPostsFilter(
+                    pageParam,
+                    10,
+                    '{"$expr":{"$eq":["$likeCount","$dislikeCount"]}}',
+                );
             case 'New':
-                return getPostsSort(pageParam, 10, { "createdAt": -1 });
+                return getPostsSort(pageParam, 10, { createdAt: -1 });
             case 'Top':
-                return getPostsSort(pageParam, 10, { "likeCount": -1 });
+                return getPostsSort(pageParam, 10, { likeCount: -1 });
             default:
                 return getPosts(pageParam);
         }
@@ -57,26 +65,11 @@ const LoadMore = () => {
     if (isLoading) {
         return (
             <>
-                <Skeleton
-                    variant="rectangular"
-                    width={500}
-                    height={200}
-                    animation="wave"
-                />
+                <Skeleton variant="rectangular" height={200} animation="wave" />
                 <Divider sx={{ my: 2 }} />
-                <Skeleton
-                    variant="rectangular"
-                    width={500}
-                    height={200}
-                    animation="wave"
-                />
+                <Skeleton variant="rectangular" height={200} animation="wave" />
                 <Divider sx={{ my: 2 }} />
-                <Skeleton
-                    variant="rectangular"
-                    width={500}
-                    height={200}
-                    animation="wave"
-                />
+                <Skeleton variant="rectangular" height={200} animation="wave" />
             </>
         );
     }

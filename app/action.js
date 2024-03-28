@@ -45,11 +45,26 @@ export const getPostsSort = async (pageParam, limit = 10, sort = {}) => {
 
 export const getChannelPosts = async (channelId) => {
     try {
-        const { data } = await axios.get(
-            `/reddit/channel/${channelId}/posts`,
-        );
+        const { data } = await axios.get(`/reddit/channel/${channelId}/posts`);
 
         return data.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const getPostsByFilterAndSort = async (
+    filter = {},
+    sort = {},
+) => {
+    try {
+        const filterParam =
+            typeof filter === 'string' ? filter : JSON.stringify(filter);
+        const sortParam = encodeURIComponent(JSON.stringify(sort));
+        const { data } = await axios.get(
+            `/reddit/post?filter=${filterParam}&sort=${sortParam}`,
+        );
     } catch (error) {
         console.error(error);
         throw error;
