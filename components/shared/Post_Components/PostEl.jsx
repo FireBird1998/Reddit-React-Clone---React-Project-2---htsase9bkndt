@@ -25,7 +25,7 @@ import SnackbarEL from '../Notification_Components/SnachBarEL';
 import PostHelper from './PostHelper';
 import { Soono } from '@/public/assets';
 import Image from 'next/image';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -115,6 +115,7 @@ const PostEl = ({ post }) => {
 };
 
 const IconButtonWithPopper = ({ userId, name }) => {
+    const queryClient = useQueryClient();
     const [isFollowed, setIsFollowed] = useState(false);
     const [message, setMessage] = useState('');
     const followMutation = useMutation(
@@ -137,6 +138,9 @@ const IconButtonWithPopper = ({ userId, name }) => {
                     console.error('Error from PostEL follow mutation', error);
                 }
             },
+            onSettled: () => {
+                queryClient.invalidateQueries(['userData', userId]);
+            },
         },
     );
     const unfollowMutation = useMutation(
@@ -152,6 +156,9 @@ const IconButtonWithPopper = ({ userId, name }) => {
             onError: (error) => {
                 console.error('Error from PostEL unfollow mutation', error);
             },
+            onSettled: () => {
+                queryClient.invalidateQueries(['userData', userId]);
+            },
         },
     );
     
@@ -163,12 +170,14 @@ const IconButtonWithPopper = ({ userId, name }) => {
        user && setIsFollowed(user?.data?.data?.isFollowed);
     },[user])
 
-    const handleFollow = () => {
+    const handleFollow = (close) => {
         followMutation.mutate();
+        close();
     };
 
-    const handleUnfollow = () => {
+    const handleUnfollow = (close) => {
         unfollowMutation.mutate();
+        close();
     };
 
     return (
@@ -197,7 +206,7 @@ const IconButtonWithPopper = ({ userId, name }) => {
                                             }}
                                             variant="contained"
                                             disableElevation
-                                            onClick={handleUnfollow}
+                                            onClick={() => handleUnfollow(popupState.close)}
                                         >
                                             <Typography>Unfollow</Typography>
                                         </Button>
@@ -210,7 +219,7 @@ const IconButtonWithPopper = ({ userId, name }) => {
                                             }}
                                             variant="contained"
                                             disableElevation
-                                            onClick={handleFollow}
+                                            onClick={() => handleFollow(popupState.close)}
                                         >
                                             <Typography>Follow</Typography>
                                         </Button>
