@@ -115,7 +115,6 @@ const PostEl = ({ post }) => {
 };
 
 const IconButtonWithPopper = ({ userId, name }) => {
-    const { isUserAuthenticated, authState } = useContext(AuthContext);
     const [isFollowed, setIsFollowed] = useState(false);
     const [message, setMessage] = useState('');
     const followMutation = useMutation(
@@ -161,7 +160,7 @@ const IconButtonWithPopper = ({ userId, name }) => {
     
 
     useEffect(() => {
-       user && setIsFollowed(user.data.data.isFollowed);
+       user && setIsFollowed(user?.data?.data?.isFollowed);
     },[user])
 
     const handleFollow = () => {
