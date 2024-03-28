@@ -10,7 +10,7 @@ import { useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
 
 const page = () => {
-    // useAuthRedirect('/signIn');
+    useAuthRedirect('/signIn');
     const { id } = useParams();
     const fetchUserData = async (id) => {
         try {

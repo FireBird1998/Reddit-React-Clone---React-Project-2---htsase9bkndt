@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
     Card,
     CardHeader,
@@ -25,7 +25,7 @@ import SnackbarEL from '../Notification_Components/SnachBarEL';
 import PostHelper from './PostHelper';
 import { Soono } from '@/public/assets';
 import Image from 'next/image';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -115,6 +115,7 @@ const PostEl = ({ post }) => {
 };
 
 const IconButtonWithPopper = ({ userId, name }) => {
+    const { isUserAuthenticated, authState } = useContext(AuthContext);
     const [isFollowed, setIsFollowed] = useState(false);
     const [message, setMessage] = useState('');
     const followMutation = useMutation(
@@ -154,6 +155,14 @@ const IconButtonWithPopper = ({ userId, name }) => {
             },
         },
     );
+    
+    
+    const {data: user} = useQuery(['userData', userId], () => axios.get(`reddit/user/${userId}`));
+    
+
+    useEffect(() => {
+       user && setIsFollowed(user.data.data.isFollowed);
+    },[user])
 
     const handleFollow = () => {
         followMutation.mutate();
