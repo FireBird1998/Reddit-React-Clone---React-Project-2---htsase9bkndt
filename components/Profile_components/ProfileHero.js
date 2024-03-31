@@ -1,29 +1,12 @@
-'use client';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/context/AuthContext';
-import { useQuery } from 'react-query';
-import { useTheme } from '@emotion/react';
 import {
-    useMediaQuery,
     Box,
-    Card,
     CardMedia,
     Paper,
-    Avatar,
     CardContent,
     Typography,
 } from '@mui/material';
 
 const ProfileHero = ({ user }) => {
-    return (
-        <Box>
-            <TopBanner user={user} />
-            
-        </Box>
-    );
-};
-
-const TopBanner = ({ user }) => {
     return (
         <Paper
             sx={{
@@ -49,10 +32,10 @@ const TopBanner = ({ user }) => {
                 />
                 <CardContent>
                     <Typography variant="h5" component="div">
-                        {user.data.name}
+                        {user?.data?.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {user.data.email}
+                        {user?.data?.email}
                     </Typography>
                 </CardContent>
                 

@@ -7,10 +7,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/navigation';
 
 
-const OverView = () => {
+const OverView = ({user}) => {
     const [filter, setFilter] = React.useState('new');
     const theme = useTheme();
     const router = useRouter();
+    console.log(user);  
 
     return (
         <Box>
@@ -41,7 +42,7 @@ const OverView = () => {
                 </Button>
             </Box>
             <Divider sx={{ my: 1 }} />
-            <Loading filter={filter} />
+            <Loading filter={filter} user={user} />
         </Box>
     );
 };

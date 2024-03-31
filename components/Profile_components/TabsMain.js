@@ -6,7 +6,6 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Slide from '@mui/material/Slide';
-import Grow from '@mui/material/Grow';
 import { useTheme } from '@emotion/react';
 
 import OverView from './OverView';
@@ -16,9 +15,10 @@ import Saved from './Saved';
 import UpVoted from './UpVoted';
 import DownVoted from './DownVoted';
 
-const TabsMain = ({ user }) => {
+const TabsMain = ({user}) => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -86,7 +86,7 @@ const TabsMain = ({ user }) => {
                     unmountOnExit
                 >
                     <TabPanel value="1" sx={{ m: 0, p: 0 }}>
-                        <OverView />
+                        <OverView user={user}/>
                     </TabPanel>
                 </Slide>
                 <Slide
@@ -96,7 +96,7 @@ const TabsMain = ({ user }) => {
                     unmountOnExit
                 >
                     <TabPanel value="2">
-                        <Posts />
+                        <Posts user={user} />
                     </TabPanel>
                 </Slide>
                 <Slide

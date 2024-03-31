@@ -3,8 +3,14 @@ import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import PostEl from '@/components/shared/Post_Components/PostEl';
 import axios from '@/utility/axiosConfig';
-import { Skeleton, Divider, Stack, Typography, Box, LinearProgress } from '@mui/material';
-
+import {
+    Skeleton,
+    Divider,
+    Stack,
+    Typography,
+    Box,
+    LinearProgress,
+} from '@mui/material';
 
 const getPostsByFilterAndSort = async ({ pageParam = 1, filter, sort }) => {
     try {
@@ -21,7 +27,12 @@ const getPostsByFilterAndSort = async ({ pageParam = 1, filter, sort }) => {
     }
 };
 
-const Loading = ({ filter }) => {
+const Loading = ({ filter, user }) => {
+    const [userName, setUserName ] = React.useState(user && user.data && user.data.name ? user.data.name : '');
+    React.useEffect(() => {
+        setUserName(user.data.name);
+    }, [user]);
+
     const fetchPosts = ({ pageParam }) => {
         switch (filter) {
             case 'hot':
@@ -29,20 +40,20 @@ const Loading = ({ filter }) => {
                     pageParam,
                     filter: {
                         $expr: { $eq: ['$likeCount', '$dislikeCount'] },
-                        'author.name': 'ankit',
+                        'author.name': `${userName}`,
                     },
                     sort: { createdAt: -1 },
                 });
             case 'new':
                 return getPostsByFilterAndSort({
                     pageParam,
-                    filter: { 'author.name': 'ankit' },
+                    filter: { 'author.name': `${userName}` },
                     sort: { createdAt: -1 },
                 });
             case 'top':
                 return getPostsByFilterAndSort({
                     pageParam,
-                    filter: { 'author.name': 'ankit' },
+                    filter: { 'author.name': `${userName}` },
                     sort: { likeCount: -1 },
                 });
         }
@@ -53,11 +64,10 @@ const Loading = ({ filter }) => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        status,
         isLoading,
         isError,
         error,
-    } = useInfiniteQuery(['posts', filter], fetchPosts, {
+    } = useInfiniteQuery(['posts', filter, userName, user.data._id], fetchPosts, {
         getNextPageParam: (lastPage, pages) => {
             // Check if the last page is empty. If it is, return undefined.
             if (lastPage?.length === 0) {

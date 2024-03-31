@@ -46,7 +46,7 @@ const ProfileSideBar = ({ user }) => {
         isLoading: isUserPostLoading,
         isError: isUserPostError,
         error: userPostError,
-    } = useQuery(['userPostDataProfile', user.data._id], () =>
+    } = useQuery(['ProfileSideBar', user.data._id], () =>
         fetchUserPostData(user.data.name),
     );
 

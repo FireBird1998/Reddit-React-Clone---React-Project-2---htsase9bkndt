@@ -8,6 +8,7 @@ import ProfileBody from '@/components/Profile_components/ProfileBody';
 import { useAuthRedirect } from '@/hooks';
 import { useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
+import { ProfileProvider } from '@/context/ProfileContex';
 
 const page = () => {
     useAuthRedirect('/signIn');
@@ -21,30 +22,32 @@ const page = () => {
         }
     };
 
-    
     const {
         data: userData,
         isLoading: isUserLoading,
         isError,
         error,
-    } = useQuery(['userData', id], () => fetchUserData(id));
-
-    
+    } = useQuery(['profileData', id], () => fetchUserData(id));
 
     if (isUserLoading) {
         return <Box>Loading...</Box>;
     }
 
+    if (isError) {
+        return <Box>{error.message}</Box>;
+    }
+
+
     return (
-        <Grid container spacing={2} justifyContent={'center'}>
-            <Grid item xs={12} md={6}>
-                <ProfileHero user={userData} />
-                <ProfileBody user={userData} />
+            <Grid container spacing={2} justifyContent={'center'}>
+                <Grid item xs={12} md={6}>
+                    <ProfileHero user={userData} />
+                    <ProfileBody user={userData} />
+                </Grid>
+                <Grid item xs={0} md={3}>
+                    <ProfileSideBar user={userData} />
+                </Grid>
             </Grid>
-            <Grid item xs={0} md={3} >
-                <ProfileSideBar user={userData} />
-            </Grid>
-        </Grid>
     );
 };
 

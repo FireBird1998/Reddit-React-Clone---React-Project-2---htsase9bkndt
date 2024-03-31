@@ -6,7 +6,7 @@ import { useTheme } from '@emotion/react';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/navigation';
 
-const Posts = () => {
+const Posts = ({user}) => {
     const [filter, setFilter] = React.useState('new');
     const theme = useTheme();
     const router = useRouter();
@@ -15,7 +15,7 @@ const Posts = () => {
         <Box>
             <SelectorEl filter={filter} setFilter={setFilter} />
             <Divider sx={{ my: 1 }} />
-            <Loading filter={filter} />
+            <Loading filter={filter} user={user}  />
         </Box>
     );
 };
