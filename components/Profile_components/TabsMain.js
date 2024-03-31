@@ -27,7 +27,7 @@ const TabsMain = ({ user }) => {
     React.useEffect(() => {
         if (authState?.userInfo?._id === user?.data?._id) {
             setIsOnewer(true);
-        }else{
+        } else {
             setIsOnewer(false);
         }
     }, [authState, user]);
@@ -49,6 +49,9 @@ const TabsMain = ({ user }) => {
         borderRadius: '25px',
         '&:hover': {
             backgroundColor: theme.palette.primary.light,
+        },
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
         },
         '&.Mui-selected': {
             color: theme.palette.secondary.main,
@@ -86,14 +89,11 @@ const TabsMain = ({ user }) => {
                     >
                         <Tab label="Overview" value="1" sx={tabStyle} />
                         <Tab label="Posts" value="2" sx={tabStyle} />
-                        {isOnewer && (
-                            <>
-                                <Tab label="Comments" value="3" sx={tabStyle} />
-                                <Tab label="Saved" value="4" sx={tabStyle} />
-                                <Tab label="Upvoted" value="5" sx={tabStyle} />
-                                <Tab label="Downvoted" value="6" sx={tabStyle} />
-                            </>
-                        )}
+                        {isOnewer &&  <Tab label="Comments" value="3" sx={tabStyle} />}
+                        {isOnewer &&  <Tab label="Saved" value="4" sx={tabStyle} />}
+                        {isOnewer &&  <Tab label="Upvoted" value="5" sx={tabStyle} />}
+                        {isOnewer &&  <Tab label="Downvoted" value="6" sx={tabStyle} />}
+                        
                     </TabList>
                 </Box>
                 <Slide
@@ -112,10 +112,11 @@ const TabsMain = ({ user }) => {
                     mountOnEnter
                     unmountOnExit
                 >
-                    <TabPanel value="2">
+                    <TabPanel value="2" sx={{ m: 0, p: 0 }}>
                         <Posts user={user} />
                     </TabPanel>
                 </Slide>
+
                 {isOnewer && (
                     <>
                         <Slide
