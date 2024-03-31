@@ -25,7 +25,7 @@ const TabsMain = ({ user }) => {
     // console.log(authState);
 
     React.useEffect(() => {
-        if (authState.userInfo._id === user.data._id) {
+        if (authState?.userInfo?._id === user?.data?._id) {
             setIsOnewer(true);
         }else{
             setIsOnewer(false);

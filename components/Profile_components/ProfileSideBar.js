@@ -57,7 +57,7 @@ const ProfileSideBar = ({ user }) => {
     // console.log(authState);
 
     useEffect(() => {
-        if (authState.userInfo._id === user.data._id) {
+        if (authState.userInfo?._id === user.data?._id) {
             setIsOnewer(true);
         } else {
             setIsOnewer(false);
@@ -73,22 +73,24 @@ const ProfileSideBar = ({ user }) => {
                 display: isMobile ? 'none' : 'block',
             }}
         >
-            <Fab
-                size="small"
-                onClick={handleClick}
-                sx={{
-                    position: 'absolute',
-                    top: '5%',
-                    left: '90%',
-                    transform: 'translate(-50%, -50%)',
-                    backgroundColor:
-                        theme.mode === 'dark'
-                            ? 'rgba(0,0,0,0.5)'
-                            : 'rgba(255,255,255,0.5)',
-                }}
-            >
-                <EditIcon />
-            </Fab>
+            {isOnewer && (
+                <Fab
+                    size="small"
+                    onClick={handleClick}
+                    sx={{
+                        position: 'absolute',
+                        top: '5%',
+                        left: '90%',
+                        transform: 'translate(-50%, -50%)',
+                        backgroundColor:
+                            theme.mode === 'dark'
+                                ? 'rgba(0,0,0,0.5)'
+                                : 'rgba(255,255,255,0.5)',
+                    }}
+                >
+                    <EditIcon />
+                </Fab>
+            )}
             <CardMedia
                 component="img"
                 height="190"
@@ -150,15 +152,17 @@ const ProfileSideBar = ({ user }) => {
                     </Grid>
                 )}
                 {isOnewer && <Divider sx={{ my: 2 }} />}
-                {isOnewer && <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                        marginBottom: 2,
-                    }}
-                >
-                    Settings
-                </Typography>}
+                {isOnewer && (
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            marginBottom: 2,
+                        }}
+                    >
+                        Settings
+                    </Typography>
+                )}
                 {isOnewer && (
                     <Box
                         sx={{
