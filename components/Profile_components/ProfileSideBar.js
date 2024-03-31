@@ -18,6 +18,7 @@ import moment from 'moment';
 import { useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { AuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const fetchUserPostData = async (name) => {
     try {
@@ -33,6 +34,7 @@ const fetchUserPostData = async (name) => {
 
 const ProfileSideBar = ({ user }) => {
     const theme = useTheme();
+    const router = useRouter();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const createdAt = moment(user.data.createdAt).format('MMM D, YYYY');
     const [image, setImage] = useState(
@@ -186,6 +188,7 @@ const ProfileSideBar = ({ user }) => {
                             sx={{
                                 size: 'small',
                             }}
+                            onClick={() => router.push(`/profile/settings/${user.data._id}`)}
                         >
                             Edit
                         </Button>

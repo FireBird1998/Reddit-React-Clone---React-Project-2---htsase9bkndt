@@ -96,7 +96,8 @@ function SideBar() {
           }}
           sx={{
             display: { lg: "none", md: "block" },
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+            backgroundColor: theme.palette.primary.main,
+            "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth, backgroundColor: theme.palette.primary.main},
           }}
         >
           {drawer}
@@ -112,6 +113,7 @@ function SideBar() {
               position: "absolute",
               left: 0,
               top: 0, // height of AppBar
+              backgroundColor: theme.palette.primary.main,
             },
           }}
           open
