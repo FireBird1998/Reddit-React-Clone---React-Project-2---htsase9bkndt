@@ -67,7 +67,7 @@ const Loading = ({ filter, user }) => {
         isLoading,
         isError,
         error,
-    } = useInfiniteQuery(['posts', filter, userName, user.data._id], fetchPosts, {
+    } = useInfiniteQuery(['postsfromProfile', filter, userName, user.data._id], fetchPosts, {
         getNextPageParam: (lastPage, pages) => {
             // Check if the last page is empty. If it is, return undefined.
             if (lastPage?.length === 0) {

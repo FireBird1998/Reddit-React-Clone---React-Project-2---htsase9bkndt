@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Card,
     CardContent,
@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment';
 import { useQuery } from 'react-query';
 import axios from '@/utility/axiosConfig';
+import { AuthContext } from '@/context/AuthContext';
 
 const fetchUserPostData = async (name) => {
     try {
@@ -49,6 +50,19 @@ const ProfileSideBar = ({ user }) => {
     } = useQuery(['ProfileSideBar', user.data._id], () =>
         fetchUserPostData(user.data.name),
     );
+
+    const { authState } = useContext(AuthContext);
+    const [isOnewer, setIsOnewer] = useState(false);
+    // console.log(user);
+    // console.log(authState);
+
+    useEffect(() => {
+        if (authState.userInfo._id === user.data._id) {
+            setIsOnewer(true);
+        } else {
+            setIsOnewer(false);
+        }
+    }, [authState, user]);
 
     return (
         <Card
@@ -135,8 +149,8 @@ const ProfileSideBar = ({ user }) => {
                         </Grid>
                     </Grid>
                 )}
-                <Divider sx={{ my: 2 }} />
-                <Typography
+                {isOnewer && <Divider sx={{ my: 2 }} />}
+                {isOnewer && <Typography
                     variant="body2"
                     color="text.secondary"
                     sx={{
@@ -144,25 +158,35 @@ const ProfileSideBar = ({ user }) => {
                     }}
                 >
                     Settings
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Avatar src={user.data.profileImage} alt={user.data.name} />
-                    <Box>
-                        <Typography variant="body2">Profile</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            customize your profile
-                        </Typography>
-                    </Box>
-                    <Button
-                        variant="contained"
-                        size="small"
+                </Typography>}
+                {isOnewer && (
+                    <Box
                         sx={{
-                            size: 'small',
+                            display: 'flex',
+                            justifyContent: 'space-between',
                         }}
                     >
-                        Edit
-                    </Button>
-                </Box>
+                        <Avatar
+                            src={user.data.profileImage}
+                            alt={user.data.name}
+                        />
+                        <Box>
+                            <Typography variant="body2">Profile</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                customize your profile
+                            </Typography>
+                        </Box>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                                size: 'small',
+                            }}
+                        >
+                            Edit
+                        </Button>
+                    </Box>
+                )}
                 <Divider sx={{ my: 2 }} />
                 <Typography variant="body2" color="text.secondary">
                     Links

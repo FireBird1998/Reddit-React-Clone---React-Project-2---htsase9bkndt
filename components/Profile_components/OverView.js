@@ -7,11 +7,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/navigation';
 
 
-const OverView = ({user}) => {
+const OverView = ({user, isOnewer}) => {
     const [filter, setFilter] = React.useState('new');
     const theme = useTheme();
-    const router = useRouter();
-    console.log(user);  
+    const router = useRouter(); 
 
     return (
         <Box>
@@ -24,7 +23,7 @@ const OverView = ({user}) => {
                 }}
             >
                 <SelectorEl filter={filter} setFilter={setFilter} />
-                <Button
+                {isOnewer && <Button
                     variant="outlined"
                     onClick={() => router.push('/submit')}
                     sx={{ 
@@ -39,7 +38,7 @@ const OverView = ({user}) => {
                     }}
                 >
                     <AddIcon/> create a new post
-                </Button>
+                </Button>}
             </Box>
             <Divider sx={{ my: 1 }} />
             <Loading filter={filter} user={user} />

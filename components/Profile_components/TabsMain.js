@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -15,9 +15,22 @@ import Saved from './Saved';
 import UpVoted from './UpVoted';
 import DownVoted from './DownVoted';
 
-const TabsMain = ({user}) => {
+import { AuthContext } from '@/context/AuthContext';
+const TabsMain = ({ user }) => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
+    const { authState } = React.useContext(AuthContext);
+    const [isOnewer, setIsOnewer] = React.useState(false);
+    // console.log(user);
+    // console.log(authState);
+
+    React.useEffect(() => {
+        if (authState.userInfo._id === user.data._id) {
+            setIsOnewer(true);
+        }else{
+            setIsOnewer(false);
+        }
+    }, [authState, user]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -73,10 +86,14 @@ const TabsMain = ({user}) => {
                     >
                         <Tab label="Overview" value="1" sx={tabStyle} />
                         <Tab label="Posts" value="2" sx={tabStyle} />
-                        <Tab label="Comments" value="3" sx={tabStyle} />
-                        <Tab label="Saved" value="4" sx={tabStyle} />
-                        <Tab label="Upvoted" value="5" sx={tabStyle} />
-                        <Tab label="Downvoted" value="6" sx={tabStyle} />
+                        {isOnewer && (
+                            <>
+                                <Tab label="Comments" value="3" sx={tabStyle} />
+                                <Tab label="Saved" value="4" sx={tabStyle} />
+                                <Tab label="Upvoted" value="5" sx={tabStyle} />
+                                <Tab label="Downvoted" value="6" sx={tabStyle} />
+                            </>
+                        )}
                     </TabList>
                 </Box>
                 <Slide
@@ -86,7 +103,7 @@ const TabsMain = ({user}) => {
                     unmountOnExit
                 >
                     <TabPanel value="1" sx={{ m: 0, p: 0 }}>
-                        <OverView user={user}/>
+                        <OverView user={user} isOnewer={isOnewer} />
                     </TabPanel>
                 </Slide>
                 <Slide
@@ -99,46 +116,50 @@ const TabsMain = ({user}) => {
                         <Posts user={user} />
                     </TabPanel>
                 </Slide>
-                <Slide
-                    direction={direction}
-                    in={value === '3'}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <TabPanel value="3">
-                        <Comments />
-                    </TabPanel>
-                </Slide>
-                <Slide
-                    direction={direction}
-                    in={value === '4'}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <TabPanel value="4">
-                        <Saved />
-                    </TabPanel>
-                </Slide>
-                <Slide
-                    direction={direction}
-                    in={value === '5'}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <TabPanel value="5">
-                        <UpVoted />
-                    </TabPanel>
-                </Slide>
-                <Slide
-                    direction={direction}
-                    in={value === '6'}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <TabPanel value="6">
-                        <DownVoted />
-                    </TabPanel>
-                </Slide>
+                {isOnewer && (
+                    <>
+                        <Slide
+                            direction={direction}
+                            in={value === '3'}
+                            mountOnEnter
+                            unmountOnExit
+                        >
+                            <TabPanel value="3">
+                                <Comments />
+                            </TabPanel>
+                        </Slide>
+                        <Slide
+                            direction={direction}
+                            in={value === '4'}
+                            mountOnEnter
+                            unmountOnExit
+                        >
+                            <TabPanel value="4">
+                                <Saved />
+                            </TabPanel>
+                        </Slide>
+                        <Slide
+                            direction={direction}
+                            in={value === '5'}
+                            mountOnEnter
+                            unmountOnExit
+                        >
+                            <TabPanel value="5">
+                                <UpVoted />
+                            </TabPanel>
+                        </Slide>
+                        <Slide
+                            direction={direction}
+                            in={value === '6'}
+                            mountOnEnter
+                            unmountOnExit
+                        >
+                            <TabPanel value="6">
+                                <DownVoted />
+                            </TabPanel>
+                        </Slide>
+                    </>
+                )}
             </TabContext>
         </Box>
     );
