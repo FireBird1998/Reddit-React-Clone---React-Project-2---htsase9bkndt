@@ -8,6 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SignpostIcon from '@mui/icons-material/Signpost';
 import RedditIcon from '@mui/icons-material/Reddit';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import { Divider, Typography, useMediaQuery } from '@mui/material';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -87,6 +88,9 @@ const AuthNavDropDown = () => {
         } else if (settingsRegex.test(pathname)) {
             setIcon(<RedditIcon />);
             setName('User Settings');
+        } else if(pathname === '/get-premium'){
+            setIcon(<SecurityOutlinedIcon />);
+            setName('Reddit Premium');
         } else {
             setIcon(null);
             setName('Other');

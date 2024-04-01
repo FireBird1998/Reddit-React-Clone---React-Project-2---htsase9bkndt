@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 
 
-const RPremiumSideBar = () => {
+const CreateCommunitySideBar = () => {
     const router = useRouter();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -76,4 +76,4 @@ const RPremiumSideBar = () => {
     );
 };
 
-export default RPremiumSideBar;
+export default CreateCommunitySideBar;

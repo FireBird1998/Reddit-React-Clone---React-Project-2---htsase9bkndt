@@ -1,5 +1,6 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import OutboundOutlinedIcon from "@mui/icons-material/OutboundOutlined";
+import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import { Add } from "@mui/icons-material";
 const sidebarLinks1 = [
   {
@@ -24,6 +25,11 @@ const otherLinks = [
     title: "Create Post",
     url: "/submit",
     icon: Add,
+  },
+  {
+    title: "Reddit Premium",
+    url: "/get-premium",
+    icon: SecurityOutlinedIcon,
   },
 ];
 

@@ -8,6 +8,7 @@ import CreatePostHomeEl from '@/components/Home_Components/CreatePostHomeEl';
 import FilterBar from '@/components/Home_Components/FilterBar';
 import RPremiumSideBar from '@/components/Home_Components/RPremiumSideBar';
 import PostContainer from '@/components/Home_Components/PostContainer';
+import CreateCommunitySideBar from '@/components/Home_Components/CreateCommunitySideBar';
 
 export default function Home() {
     const theme = useTheme();
@@ -44,6 +45,7 @@ export default function Home() {
                 {isUserAuthenticated() && (
                     <Grid item xs={false} lg={3}>
                         <RPremiumSideBar />
+                        <CreateCommunitySideBar />
                         <SideBarPopularCommunity />
                     </Grid>
                 )}

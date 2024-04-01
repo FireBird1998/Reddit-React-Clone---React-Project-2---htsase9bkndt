@@ -41,6 +41,7 @@ import MessageComponents from './MessageComponents';
 import NotificationComponent from './NotificationComponent';
 import SearchComponent from './SearchComponent';
 import Logo from './Logo';
+import GetApp from './GetApp';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -381,38 +382,12 @@ const TopBar = ({ themeSwitch }) => {
                         )}
                         {/* This is when user is not logged in */}
                         {!isUserAuthenticated() && (
-                            <Box sx={{}}>
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        color: theme.palette.typography.color,
-                                        borderColor:
-                                            theme.palette.typography.color,
-                                        mx: 1,
-                                        borderRadius: '50px',
-                                        '&:focus': {
-                                            borderColor:
-                                                theme.palette.typography.color,
-                                            color: theme.palette.typography
-                                                .color,
-                                        },
-                                        '&:hover': {
-                                            borderColor:
-                                                theme.palette.typography.color,
-                                            color: theme.palette.typography
-                                                .color,
-                                        },
-                                        display: {
-                                            xs: 'none',
-                                            lg: 'inline-flex',
-                                        },
-                                    }}
-                                >
-                                    <QrCodeScannerIcon />
-                                    <span style={{ marginLeft: '5px' }}>
-                                        Get App
-                                    </span>
-                                </Button>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                                <GetApp />
                                 <Button
                                     variant="contained"
                                     sx={{
