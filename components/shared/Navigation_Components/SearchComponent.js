@@ -155,9 +155,9 @@ const SearchComponent = () => {
                     <StyledInputBase
                         placeholder="Search Post…"
                         inputProps={{ 'aria-label': 'searchModal' }}
-                        autoFocus
                         value={searchTerm}
                         onChange={(e) => handleSearch(e)}
+                        autoFocus
                     />
                 </Search>
                 <Box

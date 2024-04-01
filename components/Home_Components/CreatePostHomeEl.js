@@ -34,6 +34,9 @@ const CreatePostHomeEl = () => {
         sx={{ marginLeft: "10px", width: "85%" }} // Added margin and width
         onClick={handleCreatePost}
         autoComplete="off"
+        InputProps={{
+            readOnly: true,
+        }}
       />
         <IconButton 
             onClick={handleCreatePost}

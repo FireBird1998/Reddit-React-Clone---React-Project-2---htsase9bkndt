@@ -9,6 +9,10 @@ const Profile = () => {
         <Typography variant="h6" component="div" fontWeight={500}>
             Profile settings
         </Typography>
+        <Typography variant="h1" component="div">
+            Feature coming soon 
+        </Typography>
+
     </Box>
   )
 }
