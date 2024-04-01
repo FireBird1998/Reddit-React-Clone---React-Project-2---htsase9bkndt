@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SignpostIcon from '@mui/icons-material/Signpost';
 import RedditIcon from '@mui/icons-material/Reddit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Divider, Typography, useMediaQuery } from '@mui/material';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -78,12 +79,12 @@ const AuthNavDropDown = () => {
             setIcon(<SignpostIcon />);
             setName('/r/post/...');
         } else if (profileRegex.test(pathname)) {
-            setIcon(<RedditIcon />); 
-            setName(`${authState.userInfo.name}'s Profile`);  
-        } else if(userRegex.test(pathname)){
+            setIcon(<RedditIcon />);
+            setName(`${authState.userInfo.name}'s Profile`);
+        } else if (userRegex.test(pathname)) {
             setIcon(<RedditIcon />);
             setName('User Profile');
-        } else if(settingsRegex.test(pathname)){
+        } else if (settingsRegex.test(pathname)) {
             setIcon(<RedditIcon />);
             setName('User Settings');
         } else {
@@ -111,8 +112,6 @@ const AuthNavDropDown = () => {
                     },
                 }}
             >
-                <MenuItem onClick={popupState.close}>Cake</MenuItem>
-                <Divider />
                 <Typography
                     variant="p"
                     sx={{ ml: 2, pb: 2, textDecoration: 'underline' }}
@@ -137,6 +136,49 @@ const AuthNavDropDown = () => {
                         </MenuItem>
                     );
                 })}
+                <Divider />
+
+                <Typography
+                    variant="p"
+                    sx={{ ml: 2, pb: 2, textDecoration: 'underline' }}
+                >
+                    User Details
+                </Typography>
+                <MenuItem
+                    onClick={() => {
+                        popupState.close();
+                        router.push(`/profile/${authState.userInfo._id}`);
+                    }}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'start',
+                        alignItems: 'center',
+                        width: '100%',
+                        gap: '10px',
+                    }}
+                >
+                    <RedditIcon />
+                    {authState.userInfo.name.split(' ')[0]}'s Profile
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        popupState.close();
+                        router.push(
+                            `/profile/settings/${authState.userInfo._id}`,
+                        );
+                    }}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'start',
+                        alignItems: 'center',
+                        width: '100%',
+                        gap: '10px',
+                    }}
+                >
+                    <SettingsIcon />
+                    Profile Settings
+                </MenuItem>
+
                 <Divider />
                 <Typography
                     variant="p"

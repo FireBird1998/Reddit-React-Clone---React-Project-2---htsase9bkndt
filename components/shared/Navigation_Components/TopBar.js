@@ -267,7 +267,6 @@ const TopBar = ({ themeSwitch }) => {
                                 aria-label="open drawer"
                                 onClick={handleDrawerToggle}
                                 sx={{
-                                    mr: 2,
                                     display: { lg: 'none', md: 'block' },
                                 }}
                             >
@@ -275,6 +274,8 @@ const TopBar = ({ themeSwitch }) => {
                             </IconButton>
                         )}
                         <Logo />
+                        {!isUserAuthenticated() && (<Box sx={{mx:1}}></Box>)}
+
                     </Box>
                     {/* this box will show the authouncitated menu */}
                     {isUserAuthenticated() && (
