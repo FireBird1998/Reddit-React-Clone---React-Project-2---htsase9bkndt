@@ -296,7 +296,10 @@ const TopBar = ({ themeSwitch }) => {
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Search Post…"
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{
+                                'aria-label': 'search',
+                                readOnly: true,
+                            }}
                         />
                     </Search>
                     <SearchComponent />

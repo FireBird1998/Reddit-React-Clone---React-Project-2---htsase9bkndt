@@ -4,9 +4,19 @@ import {
     Paper,
     CardContent,
     Typography,
+    Fab,
+    useMediaQuery,
 } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import { Edit } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
+
 
 const ProfileHero = ({ user }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const router = useRouter();
+
     return (
         <Paper
             sx={{
@@ -16,8 +26,10 @@ const ProfileHero = ({ user }) => {
         >
             <Box sx={{
                 display: 'flex',
-                alignItems: 'flex-end',
-            
+                alignItems: isMobile ? 'flex-start' : 'flex-end',
+                flexDirection: isMobile ? 'column' : 'row',
+                justifyContent: 'flex-start',
+                position: 'relative',
             }}>
                 <CardMedia
                     component="img"
@@ -38,6 +50,20 @@ const ProfileHero = ({ user }) => {
                         {user?.data?.email}
                     </Typography>
                 </CardContent>
+                <Fab
+                    size="small"
+                    color="secondary"
+                    aria-label="edit Profile"
+                    elevation={10}
+                    sx={{
+                        position: 'absolute',
+                        right: 10,
+                        top: 10,
+                    }}
+                    onClick={() => router.push(`/profile/settings/${user.data._id}`)}
+                >
+                    <Edit />
+                </Fab>
                 
             </Box>
         </Paper>

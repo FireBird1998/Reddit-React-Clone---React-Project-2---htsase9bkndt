@@ -14,6 +14,7 @@ import Profile from './Profile';
 const TabComponent = ({user}) => {
     const [value, setValue] = React.useState('1');
     const theme = useTheme();
+    console.log(user);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -82,7 +83,7 @@ const TabComponent = ({user}) => {
                     unmountOnExit
                 >
                     <TabPanel value="1" sx={{ m: 0, p: 0}}>
-                        <Account />
+                        <Account user={user} />
                     </TabPanel>
                 </Slide>
                 <Slide
@@ -92,7 +93,7 @@ const TabComponent = ({user}) => {
                     unmountOnExit
                 >
                     <TabPanel value="2" sx={{ m: 0, p: 0}}>
-                        <Profile />
+                        <Profile user={user} />
                     </TabPanel>
                 </Slide>
             </TabContext>
