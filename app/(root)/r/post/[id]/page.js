@@ -1,7 +1,7 @@
 'use client';
 import { useState, useContext } from 'react';
 import { useParams } from 'next/navigation';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient, useQueries } from 'react-query';
 import axios from '@/utility/axiosConfig';
 import { useTheme } from '@emotion/react';
 import { useMediaQuery } from '@mui/material';
@@ -154,8 +154,8 @@ const page = () => {
                                 alignItems={isMobile ? 'flex-start' : 'center'}
                             >
                                 <div>
-                                    <Typography variant="h6">
-                                        No Data, Only ID
+                                    <Typography variant="h6" sx={{ mb: 2}} fontWeight={500}>
+                                        {comment.author_details.name}
                                     </Typography>
                                     <Typography variant="body1">
                                         {comment.content}
