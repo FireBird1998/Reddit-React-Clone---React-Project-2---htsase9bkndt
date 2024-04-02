@@ -29,6 +29,9 @@ const darkMode = {
         secondary: {
             main: '#ff4500',
         },
+        colorblue: {
+            main: '#0079d3',
+        },
         background: {
             default: '#000000',
             paper: '#1a1d1f',
@@ -49,6 +52,9 @@ const lightMode = {
         },
         secondary: {
             main: '#ff4500',
+        },
+        colorblue: {
+            main: '#0079d3',
         },
         background: {
             default: '#c6c9c9',
