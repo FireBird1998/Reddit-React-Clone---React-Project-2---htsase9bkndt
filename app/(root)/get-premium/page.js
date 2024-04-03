@@ -12,6 +12,7 @@ import {
 import React, {useContext} from 'react';
 import { useTheme } from '@emotion/react';
 import { AuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
     const theme = useTheme();
@@ -213,6 +214,7 @@ const CardAd = ({ img, title, dec }) => {
 const ButtonSetBuy = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const router = useRouter();
     return (
         <Box
             sx={{
@@ -231,6 +233,7 @@ const ButtonSetBuy = () => {
                     width: '100%',
                     textTransform: 'none',
                 }}
+                onClick={() => router.push('/comming-Soon')}
             >
                 $5.99/Month
             </Button>
@@ -243,6 +246,7 @@ const ButtonSetBuy = () => {
                     backgroundColor: '#FF4500',
                     textTransform: 'none',
                 }}
+                onClick={() => router.push('/comming-Soon')}
             >
                 $49.99/Year
                 <span
