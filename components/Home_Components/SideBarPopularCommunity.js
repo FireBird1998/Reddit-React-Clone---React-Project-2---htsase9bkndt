@@ -47,9 +47,8 @@ const SideBarPopularCommunity = () => {
           marginBottom: "1rem",
           minHeight: "100px",
           maxHeight: "390px",
-          minWidth: "320px",
+          width: "100%",
           color: "white",
-          backgroundColor: "rgba(0,0,0,0.5)",
           display: {
             xs: "none",
             sm: "none",
@@ -57,9 +56,6 @@ const SideBarPopularCommunity = () => {
             lg: "block",
             xl: "block",
           },
-          position: "absolute",
-          top: "0",
-          right: "0",
         }}
       >
         <Stack spacing={1}>
@@ -141,7 +137,7 @@ const SideBarPopularCommunity = () => {
         marginBottom: "1rem",
         minHeight: "100px",
         maxHeight: isExpanded ? "calc(100vh - 100px)" : "390px",
-        minWidth: "320px",
+        width: "100%",
         color: theme.palette.typography.color,
         display: {
           xs: "none",
