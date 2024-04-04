@@ -52,9 +52,8 @@ const CreatePostComponent = () => {
             <Paper
                 elevation={3}
                 sx={{
-                    padding: 2,
-                    margin: 2,
                     width: '100%',
+                    p: 2,
                 }}
             >
                 <Typography
