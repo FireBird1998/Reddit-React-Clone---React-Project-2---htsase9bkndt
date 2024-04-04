@@ -7,6 +7,7 @@ import { useTheme } from '@emotion/react';
 import FilterBar from '@/components/Home_Components/FilterBar';
 import LoadMore from '@/components/Home_Components/LoadMore';
 import SideBarPopularCommunity from '@/components/Home_Components/SideBarPopularCommunity';
+import RPremiumSideBar from '@/components/Home_Components/RPremiumSideBar';
 
 const PopularPage = () => {
     const { isUserAuthenticated } = useContext(AuthContext);
@@ -32,6 +33,7 @@ const PopularPage = () => {
             </Grid>
             <Grid item xs={0} lg={3}>
               <SideBarPopularCommunity />
+              <RPremiumSideBar />
               </Grid>
         </Grid>
     );
