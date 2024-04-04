@@ -10,12 +10,15 @@ import {
 import { useTheme } from '@emotion/react';
 import { Edit } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
 
 const ProfileHero = ({ user }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const router = useRouter();
+    const { isUserAuthenticated, authState } = useContext(AuthContext);
 
     return (
         <Paper
@@ -50,7 +53,7 @@ const ProfileHero = ({ user }) => {
                         {user?.data?.email}
                     </Typography>
                 </CardContent>
-                <Fab
+                {authState.userInfo?._id === user.data?._id && <Fab
                     size="small"
                     color="secondary"
                     aria-label="edit Profile"
@@ -63,7 +66,7 @@ const ProfileHero = ({ user }) => {
                     onClick={() => router.push(`/profile/settings/${user.data._id}`)}
                 >
                     <Edit />
-                </Fab>
+                </Fab>}
                 
             </Box>
         </Paper>
