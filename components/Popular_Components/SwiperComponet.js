@@ -62,29 +62,6 @@ const SwiperComponent = () => {
                 <SwiperSlide>
                     <Skeleton variant="rectangular" width={250} height={200} />
                 </SwiperSlide>
-
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Skeleton variant="rectangular" width={250} height={200} />
-                </SwiperSlide>
             </Swiper>
         );
     }
