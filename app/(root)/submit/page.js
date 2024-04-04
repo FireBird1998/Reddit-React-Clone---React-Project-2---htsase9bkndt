@@ -20,14 +20,13 @@ const CreatePost = () => {
       justifyContent="center"
       alignItems="flex-start"
       bgcolor="transparent"
-      direction={isSmallScreen ? 'column' : 'row'}
     >
-      <Grid item xs={12} lg={7}>
+      <Grid item xs={12} sm={8} md={7} lg={7} xl={6}>
         <CreatePostContextProvider>
           <CreatePostComponent />
         </CreatePostContextProvider>
       </Grid>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} sm={7} md={5} lg={3} xl={3}>
         <SideGuid />
       </Grid>
     </Grid>
