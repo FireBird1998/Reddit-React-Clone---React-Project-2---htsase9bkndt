@@ -30,8 +30,6 @@ const SwiperComponent = () => {
         },
     );
 
- 
-
     if (isLoading) {
         return (
             <Swiper
@@ -92,42 +90,46 @@ const SwiperComponent = () => {
     }
 
     return (
-        
-            <Swiper
-                slidesPerView={1}
-                spaceBetween={10}
-                navigation={true}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[Navigation]}
-                className="mySwiper"
-                breakpoints={{
-                    // when window width is >= 640px
-                    640: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    // when window width is >= 768px
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 30,
-                    },
-                    // when window width is >= 1024px
-                    1024: {
-                        slidesPerView: 4,
-                        spaceBetween: 40,
-                    },
-                }}
-            >
-                {data.data.map((item, index) => (
-                    <SwiperSlide
-                        key={item.id}
-                        children={<CardEl item={item} index={index} />}
-                    />
-                ))}
-            </Swiper>
-           
+        <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+            navigation={true}
+            pagination={{
+                clickable: true,
+            }}
+            centeredSlides={true}
+            modules={[Navigation]}
+            className="mySwiper"
+            breakpoints={{
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+            }}
+        >
+            {data.data.map((item, index) => (
+                <SwiperSlide key={item.id}>
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <CardEl item={item} index={index} />
+                    </Box>
+                </SwiperSlide>
+            ))}
+        </Swiper>
     );
 };
 
