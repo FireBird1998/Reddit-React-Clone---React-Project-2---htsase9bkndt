@@ -11,6 +11,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import { Divider, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -23,6 +24,7 @@ import {
 } from 'material-ui-popup-state/hooks';
 
 const CustomButton = ({ popupState, children, ...otherProps }) => {
+    const theme = useTheme();
     return (
         <Button
             variant="contained"
@@ -30,7 +32,7 @@ const CustomButton = ({ popupState, children, ...otherProps }) => {
             {...otherProps}
             sx={{
                 width: '80%',
-                backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                backgroundColor: theme.palette.primary.light,
                 display: 'flex',
                 justifyContent: 'space-between',
                 px: 2,

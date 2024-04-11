@@ -48,7 +48,7 @@ const lightMode = {
     palette: {
         mode: 'light',
         primary: {
-            main: '#99999e',
+            main: '#ffffff',
         },
         secondary: {
             main: '#ff4500',
@@ -57,8 +57,8 @@ const lightMode = {
             main: '#0079d3',
         },
         background: {
-            default: '#c6c9c9',
-            paper: '#a8a8aa',
+            default: '#ffffff',
+            paper: '#F7F7F8',
         },
         divider: 'rgba(133,133,133,0.69)',
         typography: {

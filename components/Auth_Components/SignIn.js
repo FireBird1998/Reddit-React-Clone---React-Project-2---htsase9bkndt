@@ -64,7 +64,7 @@ export default function SignIn() {
         },
         onError: (error) => {
           console.error(error);
-          setSnackbarMessage('Login failed');
+          setSnackbarMessage(error.response.data.message);
           setSnackbarOpen(true);
           // handle error here
         }
@@ -158,7 +158,12 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{
+            color: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[800]
+                : 'white',
+          }}>
             Sign in
           </Typography>
           <Box
@@ -176,6 +181,16 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              sx={{
+                '& label.Mui-focused': {
+                  color: 'white', // change the color of the label when focused
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'white', // change the border color when focused
+                  },
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -186,11 +201,21 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              sx={{
+                '& label.Mui-focused': {
+                  color: 'white', // change the color of the label when focused
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'white', // change the border color when focused
+                  },
+                },
+              }}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -201,7 +226,13 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2" onClick={() => handleClick2()}>
+                <Link href="#" variant="body2" onClick={() => handleClick2()} sx={{
+                  color: (t) =>
+                    t.palette.mode === "light"
+                      ? t.palette.grey[800]
+                      : 'white',
+                
+                }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

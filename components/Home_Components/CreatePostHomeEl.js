@@ -5,9 +5,11 @@ import TextField from "@mui/material/TextField";
 import ImageIcon from '@mui/icons-material/Image';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import { useRouter } from "next/navigation";
+import { useTheme } from "@emotion/react";
 
 const CreatePostHomeEl = () => {
     const router = useRouter();
+    const theme = useTheme();
     const handleCreatePost = () => {
         router.push("/submit");
     };
@@ -39,9 +41,11 @@ const CreatePostHomeEl = () => {
         }}
       />
         <IconButton 
+
             onClick={handleCreatePost}
             size="large" 
             sx={{
+                color : theme.palette.text.primary,
                 borderRadius: "10px", // Add border radius
                 marginLeft: "10px", // Add margin   
                 backgroundColor: "rgba(0, 0, 0, 0.1)", // Add slight black background
@@ -68,6 +72,7 @@ const CreatePostHomeEl = () => {
             onClick={handleCreatePost}
             size="large" 
             sx={{
+                color : theme.palette.text.primary,
                 borderRadius: "10px", // Add border radius
                 marginLeft: "10px", // Add margin   
                 backgroundColor: "rgba(0, 0, 0, 0.1)", // Add slight black background

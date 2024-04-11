@@ -30,15 +30,15 @@ const Logo = () => {
                 <Image
                     src={redditLogo}// replace with your logo path
                     alt="Logo"
-                    width={30}
-                    height={30}
+                    width={26}
+                    height={26}
                 />
                 {` `}
                 <Image
                     src={redditLogoWordmark}// replace with your logo path
                     alt="Logo"
                     width={100}
-                    height={30}
+                    height={26}
                 />
                 </>
             )}

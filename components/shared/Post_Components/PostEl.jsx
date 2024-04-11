@@ -57,8 +57,8 @@ const PostEl = ({ post }) => {
                             author={post.author}
                         />
                     }
-                    title={post.author.name}
-                    subheader={post.channel?.name}
+                    title={`u/${post.author.name}`}
+                    subheader={post.channel?.name ? `r/${post.channel?.name}` : ''}
                 />
 
                 <Box
@@ -118,6 +118,7 @@ const IconButtonWithPopper = ({ userId, name }) => {
     const queryClient = useQueryClient();
     const [isFollowed, setIsFollowed] = useState(false);
     const [message, setMessage] = useState('');
+    const theme = useTheme();
     const followMutation = useMutation(
         () => {
             return axios.post(`reddit/follow/${userId}`);
@@ -184,7 +185,9 @@ const IconButtonWithPopper = ({ userId, name }) => {
         <PopupState variant="popper" popupId="demo-popup-popper">
             {(popupState) => (
                 <div>
-                    <IconButton {...bindToggle(popupState)}>
+                    <IconButton {...bindToggle(popupState)} sx={{
+                        color: theme.palette.typography.color,
+                    }}>
                         <MoreVertIcon />
                         <SnackbarEL message={message} setMessage={setMessage} />
                     </IconButton>

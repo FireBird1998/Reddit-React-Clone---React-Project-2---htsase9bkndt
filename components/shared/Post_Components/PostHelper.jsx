@@ -236,6 +236,12 @@ const PostHelper = ({ post }) => {
                 <IconButton
                     aria-label="comment"
                     onClick={() => handleComment()}
+                    sx={{
+                        color: theme.palette.text.primary,
+                        '&:hover': {
+                            color: theme.palette.secondary.main,
+                        },
+                    }}
                 >
                     <Badge badgeContent={post.commentCount} color="secondary">
                         <CommentOutlined />

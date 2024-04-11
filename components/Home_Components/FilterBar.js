@@ -45,7 +45,7 @@ const FilterBar = () => {
                         size={isMobile ? 'medium' : 'large'}
                         key={name}
                         onClick={() => toggleButton(name)}
-                        color={activeButton === name ? 'secondary' : 'default'}
+                        color={activeButton === name ? 'secondary' : 'inherit'}
                         sx={{
                             borderRadius: '10px',
                             marginLeft: '10px',

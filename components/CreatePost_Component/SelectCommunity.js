@@ -13,6 +13,19 @@ import { useTheme } from '@emotion/react';
 const SelectCommunity = () => {
     const { community, setCommunity } = useContext(CreatePostContext);
     const theme = useTheme();
+    const selectStyles = {
+        borderColor: theme.palette.secondary.dark,
+       
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.secondary.main,
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.secondary.main,
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.secondary.main,
+        },
+    };
     const fetchPopularCommunities = async () => {
         const { data } = await axios.get('/reddit/channel');
         return data.data;
@@ -49,12 +62,7 @@ const SelectCommunity = () => {
                 value={community}
                 label="Select Community"
                 onChange={handleChange}
-                sx={{
-                    '&.focused': {
-                        borderColor: theme.palette.secondary.main,
-                    },
-                    
-                }}
+                sx={selectStyles}
             >
                 {data?.map((community) => (
                     <MenuItem key={community._id} value={community}>

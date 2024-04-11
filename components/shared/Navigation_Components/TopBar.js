@@ -30,6 +30,7 @@ import {
     Logout as LogoutIcon,
     Add as AddIcon,
 } from '@mui/icons-material';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import { LayoutContext } from '@/context/LayoutContext';
@@ -46,9 +47,9 @@ import GetApp from './GetApp';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius * 5,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.black, 0.15),
     '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
+        backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.25) : alpha(theme.palette.common.black, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -82,6 +83,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         width: '100%', // input should take the full width of the Search component
     },
 }));
+
+function shortenString(str, maxLength = 6) {
+    if (str.length > maxLength) {
+        return str.slice(0, maxLength) + '...';
+    } else {
+        return str;
+    }
+}
+
 const TopBar = ({ themeSwitch }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -95,6 +105,7 @@ const TopBar = ({ themeSwitch }) => {
 
     const { handleDrawerToggle } = React.useContext(LayoutContext);
     const { toggleModal } = React.useContext(ModalContext);
+
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -275,8 +286,7 @@ const TopBar = ({ themeSwitch }) => {
                             </IconButton>
                         )}
                         <Logo />
-                        {!isUserAuthenticated() && (<Box sx={{mx:1}}></Box>)}
-
+                        {!isUserAuthenticated() && <Box sx={{ mx: 1 }}></Box>}
                     </Box>
                     {/* this box will show the authouncitated menu */}
                     {isUserAuthenticated() && (
@@ -352,13 +362,28 @@ const TopBar = ({ themeSwitch }) => {
                                             color="inherit"
                                             sx={{
                                                 ml: 2,
-                                                borderRadius: 20 / 2,
+                                                borderRadius: '20px',
+                                                gap: 1,
                                             }}
                                         >
                                             <AvatarEl />
-                                            <span>
-                                                &nbsp;{authState.userInfo.name}
-                                            </span>
+                                            <Box
+                                                sx={{
+                                                    flexDirection: 'column',
+                                                    display: 'flex',
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="p"
+                                                    sx={{
+                                                        fontSize: '1.2rem',
+                                                    }}
+                                                >
+                                                    &nbsp;
+                                                    u/{shortenString(authState.userInfo.name)}
+                                                </Typography>
+                                            </Box>
+                                            <ArrowDropDownOutlinedIcon/>
                                         </IconButton>
                                     </Tooltip>
                                 </Box>
@@ -382,11 +407,13 @@ const TopBar = ({ themeSwitch }) => {
                         )}
                         {/* This is when user is not logged in */}
                         {!isUserAuthenticated() && (
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
                                 <GetApp />
                                 <Button
                                     variant="contained"
