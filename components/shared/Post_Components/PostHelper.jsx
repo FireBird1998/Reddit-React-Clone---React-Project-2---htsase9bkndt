@@ -205,7 +205,7 @@ const PostHelper = ({ post }) => {
         onSettled: () => {},
     });
 
-    const { data, error, isError } = useQuery(
+    const { error, isError } = useQuery(
         ['likeCount', post._id],
         async () => {
             const { data } = await axios.get(`/reddit/post/${post._id}`);
