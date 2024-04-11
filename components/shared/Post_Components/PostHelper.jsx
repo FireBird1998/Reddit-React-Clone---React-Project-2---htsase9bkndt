@@ -16,6 +16,7 @@ import {
     Divider,
     Box,
 } from '@mui/material';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import axios from '@/utility/axiosConfig';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/navigation';
@@ -91,6 +92,38 @@ const PostHelper = ({ post }) => {
             setSnackbarOpen(true);
 
             Router.push('/signIn');
+        }
+    };
+
+    // Define a function named handleShare
+    const handleShare = () => {
+        // Check if the Web Share API is available in the user's browser
+        if (navigator.share) {
+            // If it is, call the share method with an object containing the data to be shared
+            navigator
+                .share({
+                    // The title of the content to be shared, taken from the post's title
+                    title: post.title,
+                    // The text of the content to be shared, taken from the post's body
+                    text: post.body,
+                    // The URL of the content to be shared, constructed from the current origin and the post's ID
+                    url: `${window.location.origin}/r/post/${post._id}`,
+                })
+                // If the share action is successful, log a message to the console
+                .then(() => {
+                    console.log('Shared successfully');
+                    snackbarMessage('Post shared successfully');
+                    setSnackbarOpen(true);
+                })
+                // If there's an error (e.g., the user cancels the share), log the error to the console
+                .catch((error) => {
+                    console.error('Error sharing:', error);
+                });
+        } else {
+            // If the Web Share API is not supported in the user's browser, log an error message to the console
+            console.error('Web share not supported');
+            setSnackbarMessage('Web share not supported');
+            setSnackbarOpen(true);
         }
     };
 
@@ -191,7 +224,7 @@ const PostHelper = ({ post }) => {
     const upvoteDownvote = () => {
         return (
             <Paper
-                elevation={5}
+                elevation={3}
                 sx={{
                     padding: 1,
                     display: 'flex',
@@ -247,6 +280,18 @@ const PostHelper = ({ post }) => {
                         <CommentOutlined />
                     </Badge>
                 </IconButton>
+                <IconButton
+                    aria-label="share"
+                    onClick={() => handleShare()}
+                    sx={{
+                        color: theme.palette.text.primary,
+                        '&:hover': {
+                            color: theme.palette.secondary.main,
+                        },
+                    }}
+                >
+                    <ShareOutlinedIcon />
+                </IconButton>
             </Paper>
         );
     };
@@ -258,7 +303,7 @@ const PostHelper = ({ post }) => {
         ) {
             return (
                 <Paper
-                    elevation={5}
+                    elevation={3}
                     sx={{
                         padding: 1,
                         display: 'flex',
