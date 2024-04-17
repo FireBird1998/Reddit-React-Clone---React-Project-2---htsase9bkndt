@@ -16,10 +16,16 @@ import {
     Paper,
     useMediaQuery,
     Button,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTheme } from '@emotion/react';
-import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
+import PopupState, {
+    bindToggle,
+    bindPopper,
+    bindMenu,
+} from 'material-ui-popup-state';
 
 import SnackbarEL from '../Notification_Components/SnachBarEL';
 import PostHelper from './PostHelper';
@@ -58,7 +64,9 @@ const PostEl = ({ post }) => {
                         />
                     }
                     title={`u/${post.author.name}`}
-                    subheader={post.channel?.name ? `r/${post.channel?.name}` : ''}
+                    subheader={
+                        post.channel?.name ? `r/${post.channel?.name}` : ''
+                    }
                 />
 
                 <Box
@@ -162,14 +170,15 @@ const IconButtonWithPopper = ({ userId, name }) => {
             },
         },
     );
-    
-    
-    const {data: user} = useQuery(['userData', userId], () => axios.get(`reddit/user/${userId}`));
-    
+
+    const { data: user, isLoading: isUserLoading } = useQuery(
+        ['userData', userId],
+        () => axios.get(`reddit/user/${userId}`),
+    );
 
     useEffect(() => {
-       user && setIsFollowed(user?.data?.data?.isFollowed);
-    },[user])
+        user && setIsFollowed(user?.data?.data?.isFollowed);
+    }, [user]);
 
     const handleFollow = (close) => {
         followMutation.mutate();
@@ -181,56 +190,46 @@ const IconButtonWithPopper = ({ userId, name }) => {
         close();
     };
 
+    if (isUserLoading) return null;
+
     return (
         <PopupState variant="popper" popupId="demo-popup-popper">
             {(popupState) => (
                 <div>
-                    <IconButton {...bindToggle(popupState)} sx={{
-                        color: theme.palette.typography.color,
-                    }}>
+                    <IconButton
+                        {...bindToggle(popupState)}
+                        sx={{
+                            color: theme.palette.typography.color,
+                        }}
+                    >
                         <MoreVertIcon />
                         <SnackbarEL message={message} setMessage={setMessage} />
                     </IconButton>
-                    <Popper {...bindPopper(popupState)} transition>
-                        {({ TransitionProps }) => (
-                            <Fade {...TransitionProps} timeout={350}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                    }}
-                                >
-                                    <Typography>Follow the {name}</Typography>
-                                    {isFollowed ? (
-                                        <Button
-                                            sx={{
-                                                backgroundColor:
-                                                    'rgba(0, 0, 0, 0.4)',
-                                                mt: 1,
-                                            }}
-                                            variant="contained"
-                                            disableElevation
-                                            onClick={() => handleUnfollow(popupState.close)}
-                                        >
-                                            <Typography>Unfollow</Typography>
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            sx={{
-                                                backgroundColor:
-                                                    'rgba(0, 0, 0, 0.4)',
-                                                mt: 1,
-                                            }}
-                                            variant="contained"
-                                            disableElevation
-                                            onClick={() => handleFollow(popupState.close)}
-                                        >
-                                            <Typography>Follow</Typography>
-                                        </Button>
-                                    )}
-                                </Paper>
-                            </Fade>
+
+                    <Menu
+                        {...bindMenu(popupState)}
+                        transition
+                        sx={{
+                            m: 1,
+                        }}
+                    >
+                        <MenuItem disabled>
+                            <Typography>Follow the {name}</Typography>
+                        </MenuItem>
+                        {isFollowed ? (
+                            <MenuItem
+                                onClick={() => handleUnfollow(popupState.close)}
+                            >
+                                Unfollow
+                            </MenuItem>
+                        ) : (
+                            <MenuItem
+                                onClick={() => handleFollow(popupState.close)}
+                            >
+                                Follow
+                            </MenuItem>
                         )}
-                    </Popper>
+                    </Menu>
                 </div>
             )}
         </PopupState>
