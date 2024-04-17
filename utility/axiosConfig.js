@@ -1,9 +1,13 @@
 import axios from 'axios';
 
+
+//We are making a instance of axios and setting the base URL to the API URL.
 const instance = axios.create({
   baseURL: 'https://academics.newtonschool.co/api/v1',
 });
 
+//We are adding the request interceptor to add the projectID and Authorization headers to the request.
+// this is 
 instance.interceptors.request.use(
   async config => {
     const token = await localStorage.getItem('token');

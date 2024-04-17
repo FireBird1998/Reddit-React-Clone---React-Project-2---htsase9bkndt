@@ -237,6 +237,13 @@ const CreateCommunitySideBar = () => {
                                     },
                             }}
                         />
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ mt: 0.5 }}
+                        >
+                            {21 - charCount} characters remaining
+                        </Typography>
                         <TextField
                             id="community description "
                             label="Description (optional)"
@@ -261,13 +268,7 @@ const CreateCommunitySideBar = () => {
                                     },
                             }}
                         />
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ mt: 0.5 }}
-                        >
-                            {21 - charCount} characters remaining
-                        </Typography>
+                        
                         <Typography
                             id="modal-modal-description"
                             sx={{ mt: 2 }}

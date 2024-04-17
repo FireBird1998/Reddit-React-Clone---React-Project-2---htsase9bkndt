@@ -40,7 +40,6 @@ const darkMode = {
         typography: {
             color: 'white',
         },
-        
     },
 };
 
@@ -121,9 +120,22 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const Layout = ({ children }) => {
-    const [theme, setTheme] = React.useState(darkTheme);
+    // Get the theme from local storage
+    const localTheme = localStorage.getItem('theme');
+
+    // If localTheme is not available (null), default to darkTheme. Otherwise, use the theme from local storage.
+    const [theme, setTheme] = React.useState(
+        localTheme === 'dark' ? darkTheme : lightTheme,
+    );
+
+    // Function to toggle the theme
     const toggleTheme = () => {
-        setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme);
+        // Determine the new theme based on the current theme
+        const newTheme = theme.palette.mode === 'dark' ? lightTheme : darkTheme;
+
+        // Set the new theme in state and in local storage
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme.palette.mode);
     };
 
     const themeToggleSwitch = () => {

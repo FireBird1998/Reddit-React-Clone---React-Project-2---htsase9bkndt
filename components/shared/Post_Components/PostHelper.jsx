@@ -87,6 +87,7 @@ const PostHelper = ({ post }) => {
     const handleDelete = () => {
         if (isUserAuthenticated()) {
             deletePost.mutate();
+            Router.push('/');
         } else {
             setSnackbarMessage('Please login to delete post');
             setSnackbarOpen(true);
@@ -102,10 +103,6 @@ const PostHelper = ({ post }) => {
             // If it is, call the share method with an object containing the data to be shared
             navigator
                 .share({
-                    // The title of the content to be shared, taken from the post's title
-                    title: post.title,
-                    // The text of the content to be shared, taken from the post's body
-                    text: post.body,
                     // The URL of the content to be shared, constructed from the current origin and the post's ID
                     url: `${window.location.origin}/r/post/${post._id}`,
                 })
