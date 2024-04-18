@@ -304,6 +304,7 @@ const ChangeNameButton = ({ user }) => {
             setName('');
             handleClose();
             queryClient.invalidateQueries('profileData');
+            queryClient.invalidateQueries('username');
         },
         onError: (error) => {
             setMessage("Error changing name");

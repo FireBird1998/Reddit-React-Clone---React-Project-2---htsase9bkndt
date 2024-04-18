@@ -43,13 +43,21 @@ import NotificationComponent from './NotificationComponent';
 import SearchComponent from './SearchComponent';
 import Logo from './Logo';
 import GetApp from './GetApp';
+import { useQuery } from 'react-query';
+import axios from '@/utility/axiosConfig';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius * 5,
-    backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.common.black, 0.15),
+    backgroundColor:
+        theme.palette.mode === 'dark'
+            ? alpha(theme.palette.common.white, 0.15)
+            : alpha(theme.palette.common.black, 0.15),
     '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.25) : alpha(theme.palette.common.black, 0.25),
+        backgroundColor:
+            theme.palette.mode === 'dark'
+                ? alpha(theme.palette.common.white, 0.25)
+                : alpha(theme.palette.common.black, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -85,7 +93,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function shortenString(str, maxLength = 6) {
-    if (str.length > maxLength) {
+    if (str?.length > maxLength) {
         return str.slice(0, maxLength) + '...';
     } else {
         return str;
@@ -105,7 +113,6 @@ const TopBar = ({ themeSwitch }) => {
 
     const { handleDrawerToggle } = React.useContext(LayoutContext);
     const { toggleModal } = React.useContext(ModalContext);
-
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -260,6 +267,22 @@ const TopBar = ({ themeSwitch }) => {
         </Menu>
     );
 
+    const { data, isLoading, isError } = useQuery(
+        'username',
+        async () => {
+            const response = await axios.get(
+                `/reddit/user/${authState.userInfo._id}`,
+            );
+            return response.data;
+        },
+        {
+            onSuccess: (data) => {
+                console.log(data?.data?.name);
+            },
+            enabled: isUserAuthenticated(),
+        },
+    );
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
@@ -373,17 +396,21 @@ const TopBar = ({ themeSwitch }) => {
                                                     display: 'flex',
                                                 }}
                                             >
-                                                <Typography
-                                                    variant="p"
-                                                    sx={{
-                                                        fontSize: '1.2rem',
-                                                    }}
-                                                >
-                                                    &nbsp;
-                                                    u/{shortenString(authState.userInfo.name)}
-                                                </Typography>
+                                                {!isLoading && (
+                                                    <Typography
+                                                        variant="p"
+                                                        sx={{
+                                                            fontSize: '1.2rem',
+                                                        }}
+                                                    >
+                                                        &nbsp; u/
+                                                        {shortenString(
+                                                            data?.data.name
+                                                        )}
+                                                    </Typography>
+                                                )}
                                             </Box>
-                                            <ArrowDropDownOutlinedIcon/>
+                                            <ArrowDropDownOutlinedIcon />
                                         </IconButton>
                                     </Tooltip>
                                 </Box>
