@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import LexicalEditorEl from './LexicalEditorEl';
 import {
     Box,
@@ -17,6 +17,37 @@ import { CreatePostContext } from '@/context/CreatePostContext';
 import SelectCommunity from './SelectCommunity';
 import ImageUploadDialog from './ImageUploadDialog';
 import Image from 'next/image';
+
+//interview question 
+function feedWord(content) {
+    const words = content.split(' ');
+
+    for(let i = 0; i < words.length; i++) {
+        const word = words[i];
+        if (checkForAbouse(word)) {
+            words[i] = 'AbouseWord';
+        }
+    }
+    return words.join(' ');
+    
+}
+
+function checkForAbouse(word) {
+    const badWords = [
+        'xyz',
+    ]
+
+    const lowerCaseWord = word.toLowerCase();
+    if (badWords.includes(lowerCaseWord)) {
+        return true;
+    }
+
+    
+    return false;
+    
+}
+
+
 
 const CreatePostComponent = () => {
     const theme = useTheme();
@@ -38,6 +69,11 @@ const CreatePostComponent = () => {
     const handleContentChange = (event) => {
         setContent(event.target.value);
     };
+
+    // useEffect(() => {
+    //    let newContent = feedWord(content);
+    //     console.log(newContent);
+    // }, [content]);
 
     return (
         <Box
