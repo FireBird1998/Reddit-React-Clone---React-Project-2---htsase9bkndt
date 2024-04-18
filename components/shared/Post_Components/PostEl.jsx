@@ -210,22 +210,34 @@ const IconButtonWithPopper = ({ userId, name }) => {
                         {...bindMenu(popupState)}
                         transition
                         sx={{
-                            m: 1,
+                            p : 1,
                         }}
                     >
-                        <MenuItem disabled>
-                            <Typography>Follow the {name}</Typography>
-                        </MenuItem>
+                        
+                        <Typography sx={{
+                            px: 2,
+                            py: 1,
+                        }}>{isFollowed ? `Unfollow ${name}` : `Follow ${name}`}</Typography>
+                        
                         {isFollowed ? (
                             <MenuItem
                                 onClick={() => handleUnfollow(popupState.close)}
+                                sx={{
+                                    display: 'flex',    
+                                    justifyContent: 'center',
+                                }}
                             >
                                 Unfollow
                             </MenuItem>
                         ) : (
                             <MenuItem
                                 onClick={() => handleFollow(popupState.close)}
+                                sx={{
+                                    display: 'flex',    
+                                    justifyContent: 'center',
+                                }}
                             >
+                            
                                 Follow
                             </MenuItem>
                         )}
