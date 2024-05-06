@@ -82,7 +82,7 @@ const SearchComponent = () => {
     };
 
     const fetchPosts = async ({ queryKey }) => {
-        const [, key, searchTerm] = queryKey;
+        const [ key, searchTerm ] = queryKey;
         console.log('Fetching data for:', key, searchTerm);
         const { data } = await axios.get(
             `/reddit/post?search={"${key}":"${searchTerm}"}`,

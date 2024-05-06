@@ -168,7 +168,7 @@ const AuthNavDropDown = () => {
                     }}
                 >
                     <RedditIcon />
-                    {authState.userInfo.name.split(' ')[0]}'s Profile
+                    {authState?.userInfo?.name.split(' ')[0]}'s Profile
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
